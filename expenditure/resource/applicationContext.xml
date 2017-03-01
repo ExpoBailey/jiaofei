@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        				http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        				http://www.springframework.org/schema/context
+        				http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        				http://www.springframework.org/schema/aop
+        				http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        				http://www.springframework.org/schema/tx
+        				http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+        				http://www.springframework.org/schema/util
+        				http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+        
+ 	<!-- 关联属性文件  使用spring自带的占位符替换功能 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- 允许JVM参数覆盖 -->
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<!-- 忽略没有找到的资源文件 -->
+		<property name="ignoreResourceNotFound" value="true"/>
+		<!-- 配置资源文件 -->
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>     
+		</property>
+	</bean>
+	
+	<!-- 数据库连接 -->
+	<bean id="dataSourceId" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${c3p0.driverClass}"/>
+		<property name="jdbcUrl" value="${c3p0.jdbcUrl}"/>
+		<property name="user" value="${c3p0.user}"/>
+		<property name="password" value="${c3p0.password}"/>
+		<property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
+		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+	</bean>
+	
+	<!-- session工厂 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		p:dataSource-ref="dataSourceId"
+		p:configLocation="classpath:hibernate.cfg.xml">
+		<!-- 配置持久化类的包 -->
+		<property name="packagesToScan">
+			<array>
+				<value>com.scarlett.expenditure.admin.account.entity</value>
+				<value>com.scarlett.expenditure.admin.business.entity</value>
+				<value>com.scarlett.expenditure.admin.identity.entity</value>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- 配置事务管理器 -->	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<!-- 注入session工厂 -->
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 配置事务切面 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager" >
+		<!-- 配置事务属性 -->
+		<tx:attributes>
+			<!-- 以query开头的业务层方法，不用开启事务 -->
+			<tx:method name="query*" read-only="true"/>
+			<!-- 以get开头的业务层方法，不用开启事务 -->
+			<tx:method name="get*" read-only="true"/>
+			<!-- 其余的业务层方法，要开启事务,且捕捉到运行时异常或其子类异常，就会回滚事务-->
+			<tx:method name="*" read-only="false" rollback-for="java.lang.RuntimeException"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- aop切面配置 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.scarlett.expenditure.*.*.service.*.*.*(..))" 
+			id="poincut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="poincut"/>
+	</aop:config>
+	
+	<!-- 开启注解注入 @Autowird @Resource -->
+	<context:annotation-config/>
+	
+	<!-- 总包扫描 @Service @Repository @Controller @Component这四种注解声明的bean，
+   	       扫描后会将这些bean交由Spring容器管理 -->
+	<context:component-scan base-package="com.scarlett.expenditure"></context:component-scan>
+	
+</beans>
