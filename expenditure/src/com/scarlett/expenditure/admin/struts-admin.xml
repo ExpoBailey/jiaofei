@@ -27,7 +27,7 @@
         </interceptors>
 
         <!-- 配置默认的拦截器引用 -->
-        <default-interceptor-ref name="popedomStack"/>
+        <default-interceptor-ref name="loginStack"/>
 
 		<!-- 全局结果配置 -->
         <global-results>
@@ -37,7 +37,6 @@
         
         <!-- 配置该命名空间下全局的Action main、head -->
 		<action name="*">
-            <interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/{1}.jsp</result>
 		</action>
 
@@ -59,7 +58,6 @@
 
         <!-- 异步加载菜单树 -->
         <action name="loadMenuTreeAjax" class="com.scarlett.expenditure.admin.LoadMenuTreeAjax">
-            <interceptor-ref name="loginStack"/>
             <result type="json">
                 <param name="root">responseData</param>
                 <param name="enableGZIP">true</param>

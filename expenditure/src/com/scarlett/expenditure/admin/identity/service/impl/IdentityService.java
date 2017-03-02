@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.scarlett.expenditure.admin.AdminConstant;
+import com.scarlett.expenditure.admin.account.dao.IFFYDao;
+import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
 import com.scarlett.expenditure.admin.identity.dao.IModuleDao;
 import com.scarlett.expenditure.admin.identity.dao.IPopedomDao;
 import com.scarlett.expenditure.admin.identity.entity.Module;
@@ -51,6 +53,9 @@ public class IdentityService implements IIdentityService {
 
     @Resource
     private GeneratorDao generatorDao;
+
+    @Resource
+    private IFFYDao FFYDao;
 
     /** TODO ##################### 用户管理 ######################### */
     /**
@@ -240,6 +245,13 @@ public class IdentityService implements IIdentityService {
             user.setPassword(MD5.getMD5(user.getPassword()));
             user.setStatus((short) 0);
             userDao.save(user);
+            // 新增用户后，绑定一个付费易帐号
+            FuFeiYi ffy = new FuFeiYi();
+            ffy.setUser(user);
+            // 原始的交易密码：12345
+            ffy.setPassword(MD5.getMD5("12345"));
+            ffy.setSum(0.00);
+            FFYDao.save(ffy);
         } catch (Exception ex) {
             throw new OAException("添加用户时出现异常！", ex);
         }

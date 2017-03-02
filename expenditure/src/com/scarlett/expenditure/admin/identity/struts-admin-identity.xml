@@ -11,13 +11,13 @@
 		<!-- #############	 用户管理		#######TODO### -->
 		<!-- #############	 			############## -->
 		<action name="selectUser" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="selectUser">
-			<result>/WEB-INF/jsp/admin/identity/user.jsp</result>
+            <interceptor-ref name="popedomStack"/>
+            <result>/WEB-INF/jsp/admin/identity/user.jsp</result>
 		</action>
 		
 		<!-- 按条件异步加载用户列表 -->
 		<action name="loadUserPageData" class="com.scarlett.expenditure.admin.identity.action.UserAction"
 				 method="loadUserPageData">
-			<interceptor-ref name="loginStack"/>
 			<result type="json">
 				<param name="root">listMap</param>
 				<param name="enableGZIP">true</param>
@@ -26,7 +26,6 @@
      	
      	<!-- 异步加载用户姓名 -->
      	<action name="loadUserNameAjax" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="loadUserNameAjax">
-			<interceptor-ref name="loginStack"/>
 			<result type="json">
      			<!-- 配置用哪个getXxx返回响应数据 getNameData -->
      			<param name="root">list</param>
@@ -35,13 +34,11 @@
 
      	<!-- 跳转到添加用户的页面 -->
      	<action name="showAddUser">
-			<interceptor-ref name="loginStack"/>
      		<result>/WEB-INF/jsp/admin/identity/addUser.jsp</result>
      	</action>
      	
      	<!-- 异步验证用户名是否重复 -->
      	<action name="validUserIdAjax" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="validUserIdAjax">
-			<interceptor-ref name="loginStack"/>
      		<result type="json">
      			<!-- 配置用哪个getXxx返回响应数据 getIsExist -->
      			<param name="root">isExist</param>
@@ -50,7 +47,8 @@
      	
      	<!-- 添加用户 -->
      	<action name="addUser" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="addUser">
-     		<!-- addUser方法的返回值 -->
+            <interceptor-ref name="popedomStack"/>
+            <!-- addUser方法的返回值 -->
      		<result type="json">
      			<param name="root">tipStatus</param>
      		</result>
@@ -62,7 +60,6 @@
      	   	
      	<!-- 跳转到修改用户的页面 -->
      	<action name="showUpdateUser" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="showUpdateUser">
-     		 <interceptor-ref name="loginStack"/>
      		<result>/WEB-INF/jsp/admin/identity/updateUser.jsp</result>
      	</action>
      	
@@ -82,12 +79,14 @@
      	
      	<!-- 批量删除用户 -->
      	<action name="deleteUser" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="deleteUser">
-     		<result type="chain">selectUser</result>
+            <interceptor-ref name="popedomStack"/>
+            <result type="chain">selectUser</result>
      	</action>
      	
      	<!-- 批量审核用户 -->
      	<action name="checkUser" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="checkUser">
-     		<!-- checkUser方法的返回值 -->
+            <interceptor-ref name="popedomStack"/>
+            <!-- checkUser方法的返回值 -->
      		<result type="json">
      			<param name="root">tipStatus</param>
      		</result>
@@ -97,12 +96,10 @@
      	<!-- #############	 角色管理		#######TODO### -->
      	<!-- #############	 			############## -->
  	    <action name="selectRole" class="com.scarlett.expenditure.admin.identity.action.RoleAction" method="selectRole">
-			<interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/identity/role.jsp</result>
      	</action>
 
 		<action name="loadRoleAjax" class="com.scarlett.expenditure.admin.identity.action.RoleAction" method="loadRoleAjax">
-			<interceptor-ref name="loginStack"/>
 			<result type="json">
 				<param name="root">listMap</param>
 				<param name="enableGZIP">true</param>
@@ -129,7 +126,6 @@
      	
      	<!-- 跳转到修改角色页面 -->
      	<action name="showUpdateRole" class="com.scarlett.expenditure.admin.identity.action.RoleAction" method="showUpdateRole">
-			<interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/identity/updateRole.jsp</result>
      	</action>
      	
@@ -147,24 +143,22 @@
      	
      	<!-- 批量删除 -->
      	<action name="deleteRole" class="com.scarlett.expenditure.admin.identity.action.RoleAction" method="deleteRole">
-     		<result type="chain">selectRole</result>
+            <interceptor-ref name="popedomStack"/>
+            <result type="chain">selectRole</result>
      	</action>
 
         <!-- #####################          ######################## -->
         <!-- #####################  操作管理  ################TODO#### -->
         <!-- #####################          ######################## -->
         <action name="mgrModule">
-			<interceptor-ref name="loginStack"/>
             <result>/WEB-INF/jsp/admin/identity/moduleMain.jsp</result>
         </action>
         <!-- 左边(树) -->
         <action name="moduleLeft">
-            <interceptor-ref name="loginStack"/>
             <result>/WEB-INF/jsp/admin/identity/moduleLeft.jsp</result>
         </action>
         <!-- 异步加载生成操作树 -->
         <action name="loadModuleTreeAjax" class="com.scarlett.expenditure.admin.identity.action.ModuleAction" method="loadModuleTreeAjax">
-            <interceptor-ref name="loginStack"/>
             <result type="json">
                 <param name="root">listMap</param>
                 <param name="enableGZIP">true</param>
@@ -173,12 +167,11 @@
 
         <!-- 右边 -->
         <action name="selectModule" class="com.scarlett.expenditure.admin.identity.action.ModuleAction" method="selectModule">
-			<interceptor-ref name="loginStack"/>
-			<result>/WEB-INF/jsp/admin/identity/module.jsp</result>
+            <result>/WEB-INF/jsp/admin/identity/module.jsp</result>
         </action>
 
+        <!-- 异步加载操作列表 -->
 		<action name="loadModuleAjax" class="com.scarlett.expenditure.admin.identity.action.ModuleAction" method="loadModuleAjax">
-			<interceptor-ref name="loginStack"/>
 			<result type="json">
 				<param name="root">listMap</param>
 				<param name="enableGZIP">true</param>
@@ -187,7 +180,6 @@
 
         <!-- 跳转到添加操作的页面 -->
         <action name="showAddModule" class="com.scarlett.expenditure.admin.identity.action.ModuleAction">
-			<interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/identity/addModule.jsp</result>
 		</action>
 
@@ -202,7 +194,6 @@
 
         <!-- 跳转到修改操作的页面 -->
         <action name="showUpdateModule" class="com.scarlett.expenditure.admin.identity.action.ModuleAction" method="showUpdateModule">
-            <interceptor-ref name="loginStack"/>
             <result>/WEB-INF/jsp/admin/identity/updateModule.jsp</result>
         </action>
 
@@ -217,18 +208,17 @@
 
         <!-- 删除操作 -->
         <action name="deleteModule" class="com.scarlett.expenditure.admin.identity.action.ModuleAction" method="deleteModule">
+            <interceptor-ref name="popedomStack"/>
             <result type="chain">selectModule</result>
         </action>
 
         <!-- 把在该角色中的用户查询出来 -->
         <action name="selectRoleUser" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="selectRoleUser">
-			<interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/identity/roleUser.jsp</result>
         </action>
 
         <!-- 把在该角色中的用户查询出来 -->
         <action name="loadRoleUserAjax" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="loadRoleUserAjax">
-			<interceptor-ref name="loginStack"/>
 			<result type="json">
                 <param name="root">listMap</param>
                 <param name="enableGZIP">true</param>
@@ -237,13 +227,11 @@
 
         <!-- 把不在该角色中的用户查询出来 -->
         <action name="showBindUser" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="showBindUser">
-            <interceptor-ref name="loginStack"/>
             <result>/WEB-INF/jsp/admin/identity/bindUser.jsp</result>
         </action>
 
         <!-- 把不在该角色中的用户查询出来 -->
         <action name="loadBindUserAjax" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="loadBindUserAjax">
-            <interceptor-ref name="loginStack"/>
             <result type="json">
                 <param name="root">listMap</param>
                 <param name="enableGZIP">true</param>
@@ -252,37 +240,31 @@
 
         <!-- 角色绑定用户 -->
         <action name="bindUser" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="bindUser">
-			<interceptor-ref name="loginStack"/>
-			<result type="chain">showBindUser</result>
+            <result type="chain">showBindUser</result>
         </action>
 
         <!-- 角色解除用户 -->
         <action name="unbindUser" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="unbindUser">
-			<interceptor-ref name="loginStack"/>
-			<result type="chain">selectRoleUser</result>
+            <result type="chain">selectRoleUser</result>
         </action>
 
         <!-- 管理角色权限 -->
         <action name="mgrPopedom" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction">
-			<interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/identity/popedomMain.jsp</result>
         </action>
 
         <!-- 左边页面 -->
         <action name="popedomLeft" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction">
-			<interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/identity/popedomLeft.jsp</result>
 		</action>
 
         <!-- 右边页面 -->
         <action name="selectPopedom" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="selectPopedom">
-			<interceptor-ref name="loginStack"/>
 			<result>/WEB-INF/jsp/admin/identity/popedom.jsp</result>
         </action>
 
         <!-- 异步加载权限 -->
         <action name="loadPopedomTreeAjax" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="loadPopedomTreeAjax">
-            <interceptor-ref name="loginStack"/>
             <result type="json">
                 <param name="root">listMap</param>
             </result>
@@ -290,7 +272,6 @@
 
         <!-- 角色绑定操作 -->
         <action name="bindModule" class="com.scarlett.expenditure.admin.identity.action.RoleBindAction" method="bindModule">
-			<interceptor-ref name="loginStack"/>
 			<result type="chain">selectPopedom</result>
         </action>
     </package>
