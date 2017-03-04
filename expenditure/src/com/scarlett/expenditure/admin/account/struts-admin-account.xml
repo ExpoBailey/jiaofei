@@ -5,8 +5,24 @@
 
 <struts>
 	
-    <package name="admin-addressbook" namespace="/admin/addressbook" extends="admin">
+    <package name="admin-account" namespace="/admin/account" extends="admin">
+
+        <!-- #############	 			############## -->
+        <!-- #############	 付费易管理		#######TODO### -->
+        <!-- #############	 			############## -->
+        <action name="countFFY" class="com.scarlett.expenditure.admin.account.action.FFYAction"
+                method="countFFY">
+            <result>/WEB-INF/jsp/account/fufeiyi.jsp</result>
+        </action>
+
+        <action name="loadFFYAjax" class="com.scarlett.expenditure.admin.account.action.FFYAction"
+                method="loadFFYAjax">
+            <result type="json">
+                <param name="root">listMap</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
 
     </package>
-    
+
 </struts>
