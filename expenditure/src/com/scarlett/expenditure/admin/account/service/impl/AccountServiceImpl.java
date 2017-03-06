@@ -1,7 +1,9 @@
 package com.scarlett.expenditure.admin.account.service.impl;
 
 import com.scarlett.expenditure.admin.account.dao.IFFYDao;
+import com.scarlett.expenditure.admin.account.dao.IRecordDao;
 import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
+import com.scarlett.expenditure.admin.account.entity.Record;
 import com.scarlett.expenditure.admin.account.service.IAccountService;
 import com.scarlett.expenditure.admin.identity.entity.User;
 import com.scarlett.expenditure.core.exception.OAException;
@@ -9,10 +11,7 @@ import com.scarlett.expenditure.core.pojo.PageModel;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *AccountServiceImpl.java
@@ -27,6 +26,9 @@ public class AccountServiceImpl implements IAccountService{
 
     @Resource
     private IFFYDao FFYDao;
+
+    @Resource
+    private IRecordDao recordDao;
 
     @Override
     public void countFFY(User user, PageModel pageModel) {
@@ -60,6 +62,40 @@ public class AccountServiceImpl implements IAccountService{
             }
         } catch (Exception ex) {
             throw new OAException("按条件异步加载用户列表时出现异常", ex);
+        }
+        return listMap;
+    }
+
+    @Override
+    public void countRecord(User user, Date startDate, Date endDate, PageModel pageModel) {
+        try {
+            pageModel.setRecordCount(recordDao.countByPage(user, startDate, endDate));
+        } catch (Exception ex) {
+            throw new OAException("条件、分页统计交易记录的条数时出现异常", ex);
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> loadRecordAjax(User user, Date startDate, Date endDate, PageModel pageModel) {
+        List<Map<String, Object>> listMap = null;
+        Map<String, Object> data;
+        try {
+            List<Record> list = recordDao.loadRecordAjax(user, startDate, endDate, pageModel);
+            if (list != null && list.size() > 0) {
+                listMap = new ArrayList<Map<String, Object>>();
+                for (Record record: list) {
+                    data = new HashMap<String, Object>();
+                    data.put("userId", record.getFfy().getUser().getUserId());
+                    data.put("userName", record.getFfy().getUser().getName());
+                    data.put("phone", record.getFfy().getUser().getPhone());
+                    data.put("content", record.getContent());
+                    data.put("tranDate", record.getTranDate());
+                    data.put("remark", record.getRemark());
+                    listMap.add(data);
+                }
+            }
+        } catch (Exception ex) {
+            throw new OAException("异步加载交易记录列表时出现异常", ex);
         }
         return listMap;
     }

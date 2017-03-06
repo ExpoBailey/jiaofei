@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>水电煤气后台系统-付费易管理</title>
+	<title>水电煤气后台系统-帐单管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -13,10 +13,19 @@
 	<link href="${path}/css/common/admin.css" type="text/css" rel="stylesheet"/>
 	<link href="${path}/js/jqPaginator/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 	<link href="${path}/js/jqeasyui/themes/default/easyui.css" type="text/css" rel="stylesheet"/>
+	<link href="${path}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet"/>
 	<script type="text/javascript" src="${path}/js/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="${path}/js/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="${path}/js/jqeasyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${path}/js/jqPaginator/jqPaginator.min.js"></script>
+	<script type="text/javascript" src="${path}/js/My97DatePicker/WdatePicker.js"></script>
+	<style type="text/css">
+
+		.empty {
+			row-span: 7;
+			collapse: 7;
+		}
+	</style>
 	<style type="text/css">
 		.nameDiv{
 			border : 1px solid black;
@@ -38,13 +47,64 @@
 				/** 获取下面所有的tr 触发onmouseover与onmouseout */
 				$("tr[id^='tr_']").trigger(this.checked ? "mouseover" : "mouseout");
 			});
-			
+
+
+			/** 为添加按钮绑定点击事件 */
+			$("#addBill").click(function(){
+				/** 弹出添加的窗口 */
+				$("#divDialog").dialog({
+					title : "添加帐单", //标题
+					width : 475, // 宽度
+					height : 270, // 高度
+					modal : true, // 模态窗口
+					collapsible : true, // 可伸缩
+					minimizable : false, // 最小化
+					maximizable : true,  // 最大化
+					onClose : function(){ // 关闭窗口
+						/** 刷新当前页面 */
+						window.location.href = "${path}/admin/business/countBill.jspx?pageModel.pageIndex="+ pageIndex +"&bill.pertain.userId=${bill.pertain.userId}&bill.company.name=${bill.company.name}&startDateStr=${startDateStr}&endDateStr=${endDateStr}";
+					}
+				});
+				$("#iframe").attr("src", "${path}/admin/business/showAddBill.jspx").show();
+			});
+
+
+			/** 为修改按钮绑定点击事件 */
+			$("#updateBill").click(function(){
+				/** 获取下面选中的checkbox */
+				var boxs = $("input[id^='box_']:checked");
+				/** 判断选中的checkbox的个数 */
+				if (boxs.size() == 0){
+					alert("请选择要修改的帐单！");
+				}else if (boxs.length == 1){
+					/** 显示修改窗口 */
+					$("#divDialog").dialog({
+						title : "修改帐单", //标题
+						width : 475, // 宽度
+						height : 245, // 高度
+						modal : true, // 模态窗口
+						collapsible : true, // 可伸缩
+						minimizable : false, // 最小化
+						maximizable : true,  // 最大化
+						onClose : function(){ // 关闭窗口
+							/** 刷新当前页面 */
+							fillTable(pageIndex);
+						}
+					});
+					$("#iframe").attr("src", "${path}/admin/business/showUpdateBill.jspx?bill.id=" + boxs.val()).show();
+
+				}else{
+					alert("修改帐单时，只能选择一个！");
+				}
+			});
+
+
 			/** 发异步请求填充表格 */
 			var fillTable = function(num){
 				  $.ajax({
-	           	   	  url : "${path}/admin/account/loadFFYAjax.jspx",
+	           	   	  url : "${path}/admin/business/loadBillAjax.jspx",
 	           	   	  type : "post",
-	           	   	  data : "pageModel.pageIndex="+ num +"&user.userId=${user.userId}&user.phone=${user.phone}",
+	           	   	  data : "pageModel.pageIndex="+ num +"&bill.pertain.userId=${bill.pertain.userId}&bill.company.name=${bill.company.name}&startDateStr=${startDateStr}&endDateStr=${endDateStr}",
 	           	   	  dataType : "json",
 	           	   	  async : true,
 	           	   	  success : function(data){
@@ -52,18 +112,23 @@
 	           	   	  	 	$("#tbody").empty();
 	           	   	  	 	// [{},{}]
 						  	if (data == null || data.length < 1) {
-								alert("暂无数据！");
+						  		alert("暂无数据！");
 								return;
 							}
 		           	   	  	$.each(data, function(i){
 		           	   	  	 	/** 创建行 */
 		           	   	  	 	var tr = $("<tr/>").attr("id", "tr_" + i).addClass("listTr");
 		           	   	  	 	$("<td><input type='checkbox' id='box_"+ i +"' value='"+ this.id +"'/>"+ (i + 1) +"</td>").appendTo(tr);
-		           	   	  	 	$("<td/>").text(this.userId).appendTo(tr);
-								$("<td/>").text(this.userName).appendTo(tr);
-								$("<td/>").text(this.phone).appendTo(tr);
-								$("<td/>").text("￥"+this.sum).appendTo(tr);
-								$("<td/>").html(this.status).appendTo(tr);
+		           	   	  	 	$("<td/>").text(this.comId).appendTo(tr);
+								$("<td/>").text(this.comName).appendTo(tr);
+								$("<td/>").text(this.price).appendTo(tr);
+								$("<td/>").text(this.use).appendTo(tr);
+								$("<td/>").text("￥ "+this.sum).appendTo(tr);
+								$("<td/>").html(this.type).appendTo(tr);
+								$("<td/>").text(this.pertain).appendTo(tr);
+								$("<td/>").html(this.appearDate.replace("T", "&nbsp;")).appendTo(tr);
+								$("<td/>").html(this.handleDate.replace("T", "&nbsp;")).appendTo(tr);
+//								$("<td/>").text(this.checker).appendTo(tr);
 								$("<td/>").text(this.remark == null ? '':this.remark).appendTo(tr);
 
 								$("#tbody").append(tr);
@@ -122,17 +187,24 @@
 	           	 	fillTable(num);
 		        }
 		    });
-			
+
+
 		});
 	</script>
 </head>
 <body>
 	<!-- 工具按钮区 -->
-	<s:form  action="/admin/account/countFFY.jspx" method="post" theme="simple">
+	<s:form  action="/admin/business/countBill.jspx" method="post" theme="simple">
 		<table>
 			<tr>
-				<td>用户ID：<s:textfield name="user.userId" autocomplete="off" id="userId"/></td>
-				<td>手机号码：<s:textfield name="user.phone" size="12"/></td>
+				<td><input type="button" value="添加" id="addBill"/></td>
+				<td><input type="button" value="修改" id="updateBill"/></td>
+				<td>用户ID：<s:textfield name="bill.pertain.userId" id="bill.pertain.userId"/></td>
+				<td>出帐机构：<s:textfield name="bill.company.name" />
+				</td>
+				<td>帐单时间段：<s:textfield name="startDateStr" value="%{startDateStr}" class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+					--&nbsp;<s:textfield name="endDateStr" value="%{endDateStr}" class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
+				<td></td>
 				<td><input type="submit" value="查询"/>&nbsp;<font color="red" id="tip">${tip}</font></td>
 			</tr>
 		</table>
@@ -140,15 +212,21 @@
 
 	<!-- 数据展示区 -->
 	<table width="100%" class="listTable" cellpadding="8" cellspacing="1">
-		<tr class="listHeaderTr">
-			<th><input type="checkbox" id="checkAll"/>全部</th>
-			<th>用户ID</th>
-			<th>用户名</th>
-			<th>手机</th>
-			<th>总额</th>
-			<th>状态</th>
-			<th>备注</th>
-		</tr>
+		<thead id="thead">
+			<tr class="listHeaderTr">
+				<th><input type="checkbox" id="checkAll"/>全部</th>
+				<th>机构编号</th>
+				<th>机构名称</th>
+				<th>单价</th>
+				<th>使用量</th>
+				<th>支付总额</th>
+				<th>帐单状态</th>
+				<th>帐单所属人</th>
+				<th>出帐时间</th>
+				<th>缴费时间</th>
+				<th>帐单备注</th>
+			</tr>
+		</thead>
 		<tbody style="background-color: #FFFFFF;" id="tbody">
 			
 		</tbody>

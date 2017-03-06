@@ -185,4 +185,10 @@ public class UserDaoImpl extends HibernateDaoImpl implements IUserDao {
         params.add(role.getId());
         return this.count(hql.toString(), params.toArray());
     }
+
+    @Override
+    public List<User> getAllUser() {
+        String hql = "select u from User u";
+        return this.find(hql);
+    }
 }

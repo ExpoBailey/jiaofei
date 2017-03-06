@@ -8,9 +8,10 @@
     <package name="admin-identity" namespace="/admin/identity" extends="admin">
 		
 		<!-- #############	 			############## -->
-		<!-- #############	 用户管理		#######TODO### -->
+		<!-- #############	 用户管理	#######TODO### -->
 		<!-- #############	 			############## -->
-		<action name="selectUser" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="selectUser">
+		<action name="selectUser" class="com.scarlett.expenditure.admin.identity.action.UserAction"
+				method="selectUser">
             <interceptor-ref name="popedomStack"/>
             <result>/WEB-INF/jsp/admin/identity/user.jsp</result>
 		</action>
@@ -18,6 +19,16 @@
 		<!-- 按条件异步加载用户列表 -->
 		<action name="loadUserPageData" class="com.scarlett.expenditure.admin.identity.action.UserAction"
 				 method="loadUserPageData">
+			<interceptor-ref name="defaultStack"/>
+			<result type="json">
+				<param name="root">listMap</param>
+				<param name="enableGZIP">true</param>
+			</result>
+		</action>
+
+		<!-- 异步加载所有用户 -->
+		<action name="loadAllUserAjax" class="com.scarlett.expenditure.admin.identity.action.UserAction"
+				 method="loadAllUserAjax">
 			<result type="json">
 				<param name="root">listMap</param>
 				<param name="enableGZIP">true</param>

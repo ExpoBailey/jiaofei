@@ -1,6 +1,8 @@
 package com.scarlett.expenditure.admin.identity.action;
 
 import com.scarlett.expenditure.admin.identity.entity.User;
+import com.scarlett.expenditure.core.pojo.PageModel;
+import org.apache.struts2.json.JSONUtil;
 
 /**
  *UserAction.java 
@@ -18,6 +20,16 @@ public class UserAction extends IdentityAction {
     private String userId;
     private String userIds;
     private String name;
+
+    public String loadAllUserAjax(){
+        try {
+            listMap = identityService.loadAllUserAjax();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+
     /**
      * 返回用户页面，初始化用户分页实体
      * @return
@@ -37,7 +49,11 @@ public class UserAction extends IdentityAction {
      */
     public String loadUserPageData(){
         try {
+            System.out.println("接收到的页码："+pageModel.getPageIndex());
+            if (user != null)
+                System.out.println("接收到的条件："+user.getName() + "  " + user.getPhone());
             listMap = identityService.loadUserPageData(user, pageModel);
+            System.out.println("用户列表：" + JSONUtil.serialize(listMap));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -164,4 +180,5 @@ public class UserAction extends IdentityAction {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
 }

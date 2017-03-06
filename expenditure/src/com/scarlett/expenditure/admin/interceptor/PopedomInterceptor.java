@@ -56,6 +56,7 @@ public class PopedomInterceptor extends MethodFilterInterceptor {
 					/** 把该模块所有的权限存入Session */
 					invocation.getInvocationContext().getSession().put(AdminConstant.SESSION_USER_MODULE_POPEDOM, 
 							entry.getValue());
+					System.out.println("权限："+entry.getValue());
 					isPopedom = true;
 					break outer;
 				}

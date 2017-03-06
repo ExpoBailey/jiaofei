@@ -41,6 +41,7 @@
 		<property name="minPoolSize" value="${c3p0.minPoolSize}"/>
 		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
 		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+		<property name="maxStatements" value="${c3p0.maxStatements}"/>
 	</bean>
 	
 	<!-- session工厂 -->

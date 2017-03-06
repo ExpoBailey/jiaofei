@@ -116,6 +116,24 @@ public class IdentityService implements IIdentityService {
         }
     }
 
+    @Override
+    public List<Map<String, Object>> loadAllUserAjax() {
+        try {
+            List<User> users = userDao.getAllUser();
+            List<Map<String, Object>> data = new ArrayList<>();
+            /** 迭代用户集合 */
+            for (User u : users) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", u.getUserId());
+                map.put("name", u.getName());
+                data.add(map);
+            }
+            return data;
+        } catch (Exception e) {
+            throw new OAException("加载所有用户数据异常！");
+        }
+    }
+
     /**
      * 获取该用户所有的权限
      * @param userId

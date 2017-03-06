@@ -39,7 +39,7 @@ public class PageModel {
 		this.pageSize = pageSize;
 	}
 	public int getRecordCount() {
-		return recordCount;
+		return recordCount == 0 ? 1 : recordCount ;
 	}
 	public void setRecordCount(int recordCount) {
 		this.recordCount = recordCount;

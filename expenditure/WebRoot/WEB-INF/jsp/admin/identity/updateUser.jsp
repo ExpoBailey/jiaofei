@@ -16,36 +16,8 @@
 		<script type="text/javascript" src="${path}/js/jquery-migrate-1.2.1.min.js"></script>
 		<script type="text/javascript">
 			$(function(){
-				/** 异步加载数据填充部门与职位下拉列表 */
-				$.ajax({
-					url : "${path}/admin/identity/loadDeptAndJobAjax.jspx",
-					type : "post",
-					dataType : "json",
-					async : true,
-					success : function(data){
-						// data: {"depts" : [{},{}], "jobs" : [{},{}]} Map<String, List<Map<String,Object>>>
-						//       [[{},{}],[{},{}]] : List<List<Map>>>
-						/** 填充部门下拉列表 */
-						$.each(data.depts, function(){
-							// this : {id : '', name : ''}
-							$("<option/>").val(this.id).text(this.name).appendTo("#deptSelect");
-						});
-						/** 选中option */
-						$("#deptSelect").val("${user.dept.id}");
-						/** 填充职位下拉列表 */
-						$.each(data.jobs, function(){
-							// this : {code : '', name : ''}
-							$("<option/>").val(this.code).text(this.name).appendTo("#jobSelect");
-						});
-						/** 选中option */
-						$("#jobSelect").val("${user.job.code}");
-					},
-					error : function(){
-						alert("数据加载失败！");
-					}
-				});
-				
-				
+
+
 				/** 修改用户，提交表单函数 */
 				$("#btn_submit").click(function(){
 					// 对表单中所有字段做校验
@@ -112,7 +84,7 @@
 			<tr>
 				<td>登&nbsp;录&nbsp;名：</td>
 				<td>
-					<s:textfield value="%{user.userId}" size="18" disabled="true" id="userId"/>
+					<s:textfield name="user.userId" disabled="true" size="18" id="userId"/>
 				</td>
 				<td>用户姓名：</td>
 				<td>
@@ -120,19 +92,19 @@
 				</td>
 			</tr>
 			<tr>
-				<td>性别：</td>
+				<td>用户密码：</td>
 				<td>
-					<s:select name="user.sex" list="#{1:'男', 2 :'女'}"/>
+					<s:password name="user.password" size="18" id="passWord"/>
 				</td>
-				<td>部&nbsp;&nbsp;门：</td>
+				<td>重输密码：</td>
 				<td>
-					<select id="deptSelect" name="user.dept.id"></select>
+					<s:password name="repwd" size="18" id="repwd"/>
 				</td>
 			</tr>
 			<tr>
-				<td>职&nbsp;&nbsp;位：</td>
+				<td>性别：</td>
 				<td>
-					<select id="jobSelect" name="user.job.code"></select>
+					<s:select name="user.sex" list="#{1:'男', 2 :'女'}"/>
 				</td>
 				<td>邮&nbsp;&nbsp;箱：</td>
 				<td>
@@ -156,8 +128,8 @@
 				</td>
 				<td>问&nbsp;&nbsp;题：</td>
 				<td>
-					<s:select name="user.question" 
-						list="#{0:'您的生日？',1:'您父亲的姓名？',2:'您的出生地？',3:'您母亲的名字？'}"/>
+					<s:select name="user.question"
+							  list="#{0:'您的生日？',1:'您父亲的姓名？',2:'您的出生地？',3:'您母亲的名字？'}"/>
 				</td>
 			</tr>
 			<tr>

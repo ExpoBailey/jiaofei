@@ -25,8 +25,8 @@ public class FFYDaoImpl extends HibernateDaoImpl implements IFFYDao {
     public int countByPage(User user) {
         StringBuilder hql = new StringBuilder();
         ArrayList<Object> params = new ArrayList<>();
-        hql.append("select count(f.id) from FuFeiYi as f left join User as u on f.user=u.userId ")
-        .append(" where 1=1");
+        hql.append("select count(f.id) from FuFeiYi f inner join f.user u ")
+        .append(" where 1=1 ");
         if (user != null) {
             if (!StringUtils.isEmpty(user.getUserId())) {
                 hql.append(" and u.userId like ?");
@@ -44,7 +44,7 @@ public class FFYDaoImpl extends HibernateDaoImpl implements IFFYDao {
     public List<FuFeiYi> loadFFYByPage(User user, PageModel pageModel) {
         StringBuilder hql = new StringBuilder();
         ArrayList<Object> params = new ArrayList<>();
-        hql.append("select * from FuFeiYi as f left join User as u on f.user=u.userId ")
+        hql.append("select f from FuFeiYi f inner join f.user u ")
                 .append(" where 1=1");
         if (user != null) {
             if (!StringUtils.isEmpty(user.getUserId())) {

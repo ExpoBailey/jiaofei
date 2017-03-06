@@ -80,4 +80,10 @@ public interface IUserDao extends HibernateDao{
      * @return
      */
     int countUserByPageNotRoleId(Role role);
+
+    /**
+     * 加载所有用户
+     * @return
+     */
+    List<User> getAllUser();
 }

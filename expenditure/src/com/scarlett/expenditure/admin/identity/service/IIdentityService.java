@@ -248,4 +248,10 @@ public interface IIdentityService {
      * @return
      */
     Map<String,Object> login(String userId, String password, String vcode, int key);
+
+    /**
+     * 加载所有用户
+     * @return
+     */
+    List<Map<String,Object>> loadAllUserAjax();
 }

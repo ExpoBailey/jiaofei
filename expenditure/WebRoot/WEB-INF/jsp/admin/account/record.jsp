@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>水电煤气后台系统-付费易管理</title>
+	<title>水电煤气后台系统-交易记录管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -13,10 +13,19 @@
 	<link href="${path}/css/common/admin.css" type="text/css" rel="stylesheet"/>
 	<link href="${path}/js/jqPaginator/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 	<link href="${path}/js/jqeasyui/themes/default/easyui.css" type="text/css" rel="stylesheet"/>
+	<link href="${path}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet"/>
 	<script type="text/javascript" src="${path}/js/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="${path}/js/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="${path}/js/jqeasyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${path}/js/jqPaginator/jqPaginator.min.js"></script>
+	<script type="text/javascript" src="${path}/js/My97DatePicker/WdatePicker.js"></script>
+	<style type="text/css">
+
+		.empty {
+			row-span: 7;
+			collapse: 7;
+		}
+	</style>
 	<style type="text/css">
 		.nameDiv{
 			border : 1px solid black;
@@ -42,9 +51,9 @@
 			/** 发异步请求填充表格 */
 			var fillTable = function(num){
 				  $.ajax({
-	           	   	  url : "${path}/admin/account/loadFFYAjax.jspx",
+	           	   	  url : "${path}/admin/account/loadRecordAjax.jspx",
 	           	   	  type : "post",
-	           	   	  data : "pageModel.pageIndex="+ num +"&user.userId=${user.userId}&user.phone=${user.phone}",
+	           	   	  data : "pageModel.pageIndex="+ num +"&user.userId=${user.userId}&user.phone=${user.phone}&startDateStr=${startDateStr}&endDateStr=${endDateStr}",
 	           	   	  dataType : "json",
 	           	   	  async : true,
 	           	   	  success : function(data){
@@ -52,7 +61,7 @@
 	           	   	  	 	$("#tbody").empty();
 	           	   	  	 	// [{},{}]
 						  	if (data == null || data.length < 1) {
-								alert("暂无数据！");
+						  		alert("暂无数据！");
 								return;
 							}
 		           	   	  	$.each(data, function(i){
@@ -62,8 +71,8 @@
 		           	   	  	 	$("<td/>").text(this.userId).appendTo(tr);
 								$("<td/>").text(this.userName).appendTo(tr);
 								$("<td/>").text(this.phone).appendTo(tr);
-								$("<td/>").text("￥"+this.sum).appendTo(tr);
-								$("<td/>").html(this.status).appendTo(tr);
+								$("<td/>").text(this.content).appendTo(tr);
+								$("<td/>").html(this.tranDate.replace("T", "&nbsp;")).appendTo(tr);
 								$("<td/>").text(this.remark == null ? '':this.remark).appendTo(tr);
 
 								$("#tbody").append(tr);
@@ -128,11 +137,14 @@
 </head>
 <body>
 	<!-- 工具按钮区 -->
-	<s:form  action="/admin/account/countFFY.jspx" method="post" theme="simple">
+	<s:form  action="/admin/account/countRecord.jspx" method="post" theme="simple">
 		<table>
 			<tr>
 				<td>用户ID：<s:textfield name="user.userId" autocomplete="off" id="userId"/></td>
 				<td>手机号码：<s:textfield name="user.phone" size="12"/></td>
+				<td>时间段：<s:textfield name="startDateStr" value="%{startDateStr}" class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+					--&nbsp;<s:textfield name="endDateStr" value="%{endDateStr}" class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
+				<td></td>
 				<td><input type="submit" value="查询"/>&nbsp;<font color="red" id="tip">${tip}</font></td>
 			</tr>
 		</table>
@@ -140,15 +152,17 @@
 
 	<!-- 数据展示区 -->
 	<table width="100%" class="listTable" cellpadding="8" cellspacing="1">
-		<tr class="listHeaderTr">
-			<th><input type="checkbox" id="checkAll"/>全部</th>
-			<th>用户ID</th>
-			<th>用户名</th>
-			<th>手机</th>
-			<th>总额</th>
-			<th>状态</th>
-			<th>备注</th>
-		</tr>
+		<thead id="thead">
+			<tr class="listHeaderTr">
+				<th><input type="checkbox" id="checkAll"/>全部</th>
+				<th>用户ID</th>
+				<th>用户名</th>
+				<th>手机号</th>
+				<th>交易内容</th>
+				<th>交易时间</th>
+				<th>备注</th>
+			</tr>
+		</thead>
 		<tbody style="background-color: #FFFFFF;" id="tbody">
 			
 		</tbody>

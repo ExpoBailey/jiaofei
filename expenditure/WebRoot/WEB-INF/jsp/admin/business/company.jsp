@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>水电煤气后台系统-用户管理</title>
+	<title>水电煤气后台系统-机构管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -40,34 +40,34 @@
 			});
 			
 			
-			/** ##################### 用户姓名文本框(联想) ######################## */
+			/** ##################### 机构姓名文本框(联想) ######################## */
 			$(window).resize(function(){
 				/** 获取文本框的偏移对象 */
-				var offset = $("#userName").offset();
+				var offset = $("#companyName").offset();
 				/** 设置nameDiv偏移左边与上面的距离 */
 				$("#nameDiv").css("left", offset.left)
-			             .css("top", offset.top + $("#userName").outerHeight() + 1)
-			             .css("width", $("#userName").innerWidth() + 1);
+			             .css("top", offset.top + $("#companyName").outerHeight() + 1)
+			             .css("width", $("#companyName").innerWidth() + 1);
 			});
 			/** 定义变量缓存上一次姓名的查询数据 */
 			var cache_name = "";
 			/** 为姓名文本框绑定onkeyup事件 */
-			$("#userName").keyup(function(){
+			$("#companyName").keyup(function(){
 				/** 获取文本框的偏移对象 */
-				var offset = $("#userName").offset();
+				var offset = $("#companyName").offset();
 				/** 设置nameDiv偏移左边与上面的距离 */
 				$("#nameDiv").css("left", offset.left)
-			             .css("top", offset.top + $("#userName").outerHeight() + 1)
-			             .css("width", $("#userName").innerWidth() + 1);
+			             .css("top", offset.top + $("#companyName").outerHeight() + 1)
+			             .css("width", $("#companyName").innerWidth() + 1);
 				/** 获取文本框中的值 */
 				var name = $.trim(this.value);
 				/** 判断输入值 */
 				if (name != ""){
 					/** 判断是不是与上次查询条件一样 */
 					if (cache_name != name){
-						/** 异步请求查询用户姓名 */
+						/** 异步请求查询机构姓名 */
 						$.ajax({
-							url : "${path}/admin/identity/loadUserNameAjax.jspx",
+							url : "${path}/admin/business/loadCompanyNameAjax.jspx",
 							type : "post",
 							data : {name : name},
 							dataType : "json", // {}, [], [{},{}]
@@ -96,7 +96,7 @@
 										}
 									).click(function(){
 										/** 获取div中的文本，放到name文本框 */
-										$("#userName").val($(this).text());
+										$("#companyName").val($(this).text());
 										/** 缓存姓名 */
 										cache_name = $(this).text();
 										/** 隐藏div(往上滑) */
@@ -143,8 +143,8 @@
 					prevDiv.css("background-color", "#FFC0CB");
 					/** 设置缓存变量的值 (防止发送异步请求查询数据)*/
 					cache_name = prevDiv.text();
-					/** 用户姓名文本框添加value */
-					$("#userName").val(prevDiv.text());
+					/** 机构姓名文本框添加value */
+					$("#companyName").val(prevDiv.text());
 				}
 				if (event.keyCode === 40){ // 向下
 					/** 获取nameDiv中所有的子元素，再把有style的div找出来 */
@@ -162,17 +162,17 @@
 					nextDiv.css("background-color", "#FFC0CB");
 					/** 设置缓存变量的值 (防止发送异步请求查询数据)*/
 					cache_name = nextDiv.text();
-					/** 用户姓名文本框添加value */
-					$("#userName").val(nextDiv.text());
+					/** 机构姓名文本框添加value */
+					$("#companyName").val(nextDiv.text());
 				}
 			});
-			/** ##################### 用户姓名文本框(联想) ######################## */
+			/** ##################### 机构姓名文本框(联想) ######################## */
 			
 			/** 为添加按钮绑定点击事件 */
-			$("#addUser").click(function(){
-				/** 弹出添加用户的窗口 */
+			$("#addCompany").click(function(){
+				/** 弹出添加机构的窗口 */
 				$("#divDialog").dialog({
-					title : "添加用户", //标题
+					title : "添加机构", //标题
 					width : 475, // 宽度
 					height : 270, // 高度
 					modal : true, // 模态窗口
@@ -181,24 +181,24 @@
 					maximizable : true,  // 最大化
 					onClose : function(){ // 关闭窗口
 						/** 刷新当前页面 */
-						window.location.href = "${path}/admin/identity/selectUser.jspx?pageModel.pageIndex="+ pageIndex +"&user.name=${user.name}&user.phone=${user.phone}";
+						window.location.href = "${path}/admin/business/countCompany.jspx?pageModel.pageIndex="+ pageIndex +"&company.name=${company.name}&company.type=${company.type}";
 					}
 				});
-				$("#iframe").attr("src", "${path}/admin/identity/showAddUser.jspx").show();
+				$("#iframe").attr("src", "${path}/admin/business/showAddCompany.jspx").show();
 			});
 			
 			
 			/** 为修改按钮绑定点击事件 */
-			$("#updateUser").click(function(){
+			$("#updateCompany").click(function(){
 				/** 获取下面选中的checkbox */
 				var boxs = $("input[id^='box_']:checked");
 				/** 判断选中的checkbox的个数 */
 				if (boxs.size() == 0){
-					alert("请选择要修改的用户！");
+					alert("请选择要修改的机构！");
 				}else if (boxs.length == 1){
 					/** 显示修改窗口 */
 					$("#divDialog").dialog({
-						title : "修改用户", //标题
+						title : "修改机构", //标题
 						width : 475, // 宽度
 						height : 245, // 高度
 						modal : true, // 模态窗口
@@ -210,52 +210,32 @@
 							fillTable(pageIndex);
 						}
 					});
-					$("#iframe").attr("src", "${path}/admin/identity/showUpdateUser.jspx?user.userId=" + boxs.val()).show();
+					$("#iframe").attr("src", "${path}/admin/business/showUpdateCompany.jspx?company.id=" + boxs.val()).show();
 					
 				}else{
-					alert("修改用户时，只能选择一个！");
-				}
-			});
-			
-			/** 为删除按钮绑定点击事件 */
-			$("#deleteUser").click(function(){
-				/** 获取下面选中的checkbox */
-				var boxs = $("input[id^='box_']:checked");
-				/** 判断选中的checkbox的个数 */
-				if (boxs.size() == 0){
-					alert("请选择要删除的用户！");
-				}else{
-					if (confirm("您确定要删除吗？")){
-						/** 定义数组 */
-						var userIds = new Array();
-						/** 获取删除的userId */
-						boxs.each(function(){
-							userIds.push(this.value);
-						});
-						window.location.href = "${path}/admin/identity/deleteUser.jspx?pageModel.pageIndex="+ pageIndex +"&user.name=${user.name}&user.phone=${user.phone}&userIds=" + userIds.join(",");
-					}
+					alert("修改机构时，只能选择一个！");
 				}
 			});
 			
 			/** 为审核按钮绑定点击事件 */
-			$("#checkUser").click(function(){
+			$("#checkCompany").click(function(){
 				/** 获取下面选中的checkbox */
 				var boxs = $("input[id^='box_']:checked");
 				/** 判断选中的checkbox的个数 */
 				if (boxs.size() == 0){
-					alert("请选择要审核的用户！");
+					alert("请选择要审核的机构！");
 				}else{
 					/** 定义数组 */
-					var userIds = new Array();
-					/** 获取删除的userId */
+					var companyIds = new Array();
+					/** 获取删除的companyId */
 					boxs.each(function(){
-						userIds.push(this.value);
+						companyIds.push(this.value);
 					});
 					$.ajax({
-						url : "${path}/admin/identity/checkUser.jspx",
+						url : "${path}/admin/identity/checkCompany.jspx",
 						type : "post",
 						dataType : "json",
-						data : "userIds=" + userIds.join(",") + "&user.status=" + $("#status").val(),
+						data : "companyIds=" + companyIds.join(",") + "&company.status=" + $("#status").val(),
 						async : true,
 						success : function(data){
 							if (data == 0){
@@ -273,51 +253,30 @@
 				}
 			});
 			
-			/** 获取用户在模块对应的权限 */
-			var modulePopedoms = "${session_user_module_popedom}";
-			var btnArrs = ["addUser", "updateUser", "deleteUser", "checkUser"];
-			$.each(btnArrs, function(){
-				if (modulePopedoms.indexOf(this) == -1){
-					if (this == "checkUser"){
-						$("#td_" + this).hide();
-					}
-					$("#" + this).hide();
-				}
-			});
-			
 			/** 发异步请求填充表格 */
 			var fillTable = function(num){
-				alert("num:"+num);
 				  $.ajax({
-	           	   	  url : "${path}/admin/identity/loadUserPageData.jspx",
-					  type : "post",
-					  data : "pageModel.pageIndex="+ num +"&user.name=${user.name}&user.phone=${user.phone}",
-					  dataType : "json",
-					  async : true,
+	           	   	  url : "${path}/admin/business/loadCompanyAjax.jspx",
+	           	   	  type : "post",
+	           	   	  data : "pageModel.pageIndex="+ num +"&company.type=${company.type}&company.name=${company.name}",
+	           	   	  dataType : "json",
+	           	   	  async : true,
 	           	   	  success : function(data){
-	           	   	  	 	$("#tbody").empty();
-	           	   	  		if (data == null || data.length < 1) {
-	           	   	  			alert("暂无数据！");
-								return;
-							}
 	           	   	  		// this : {}
+	           	   	  	 	$("#tbody").empty();
 	           	   	  	 	// [{},{}]
 		           	   	  	$.each(data, function(i){
+		           	   	  		if(data == null || data.length < 1) {
+		           	   	  			alert("暂无数据！");
+									return;
+								}
 		           	   	  	 	/** 创建行 */
 		           	   	  	 	var tr = $("<tr/>").attr("id", "tr_" + i).addClass("listTr");
-		           	   	  	 	$("<td><input type='checkbox' id='box_"+ i +"' value='"+ this.userId +"'/>"+ (i + 1) +"</td>").appendTo(tr);
-		           	   	  	 	$("<td/>").text(this.userId).appendTo(tr);
+		           	   	  	 	$("<td><input type='checkbox' id='box_"+ i +"' value='"+ this.id+"'/>"+ (i + 1) +"</td>").appendTo(tr);
+		           	   	  	 	$("<td/>").text(this.id).appendTo(tr);
+								$("<td/>").text(this.type).appendTo(tr);
 								$("<td/>").text(this.name).appendTo(tr);
-								$("<td/>").text(this.sex).appendTo(tr);
-								$("<td/>").text(this.qqNum).appendTo(tr);
-								$("<td/>").text(this.phone).appendTo(tr);
-								$("<td/>").text(this.email).appendTo(tr);
-								$("<td/>").html(this.status).appendTo(tr);
-								$("<td/>").html(this.createDate.replace("T","&nbsp;")).appendTo(tr);
-								$("<td/>").text(this.creater).appendTo(tr);
-								$("<td/>").html(this.checkDate.replace("T","&nbsp;")).appendTo(tr);
-								$("<td/>").text(this.checker).appendTo(tr);
-								
+								$("<td/>").text(this.price).appendTo(tr);
 								$("#tbody").append(tr);
 		           	   	  	 });
 	           	   	  	 	
@@ -329,6 +288,8 @@
 							trs.click(function(){
 								/** 获取选中的checkbox (把选中的过滤出来) */
 								//var checkBoxs = boxs.filter(":checked");
+			
+								
 								var input = $(this).find("input");
 								if (input.prop("checked")) {
 									input.prop("checked", false);
@@ -352,49 +313,42 @@
 							);
 			
 	           	   	  },
-	           	   	  error : function(){
+	           	   	  error : function(data){
+	           	   	  	alert(data);
 	           	   	  	alert("数据加载失败！");
 	           	   	  }
 	           	   });
 			};
-
+			
 			/** 显示分页标签 */
-			$.jqPaginator("#pager", {
-				totalCounts: ${pageModel.recordCount}, // 总记录条数
-				pageSize : ${pageModel.pageSize}, // 每页显示的记录数
-				visiblePages: 8, // 显示的页码数
-				currentPage: ${pageModel.pageIndex}, // 当前页码
-				first: '<li class="first"><a href="javascript:;">首页</a></li>',
-				prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
-				next: '<li class="next"><a href="javascript:;">下一页</a></li>',
-				last: '<li class="last"><a href="javascript:;">尾页</a></li>',
-				page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-				onPageChange: function (num, type) {
-					window.pageIndex = num;
-					fillTable(num);
-				}
-			});
+			 $.jqPaginator("#pager", {
+		        totalCounts: ${pageModel.recordCount}, // 总记录条数
+		        pageSize : ${pageModel.pageSize}, // 每页显示的记录数
+		        visiblePages: 8, // 显示的页码数
+		        currentPage: ${pageModel.pageIndex}, // 当前页码
+		        first: '<li class="first"><a href="javascript:;">首页</a></li>',
+		        prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
+		        next: '<li class="next"><a href="javascript:;">下一页</a></li>',
+		        last: '<li class="last"><a href="javascript:;">尾页</a></li>',
+		        page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+		        onPageChange: function (num, type) {
+		           	window.pageIndex = num;
+	           	 	fillTable(num);
+		        }
+		    });
 			
 		});
 	</script>
 </head>
 <body>
 	<!-- 工具按钮区 -->
-	<s:form  action="/admin/identity/selectUser.jspx" method="post" theme="simple">
+	<s:form  action="/admin/business/countCompany.jspx" method="post" theme="simple">
 		<table>
 			<tr>
-				<td><input type="button" value="添加" id="addUser"/></td>
-				<td><input type="button" value="修改" id="updateUser"/></td>
-				<td><input type="button" value="删除" id="deleteUser"/></td>
-				<td id="td_checkUser">状态：<select id="status">
-					    <option value="1">审核</option>
-					    <option value="2">不通过</option>
-					    <option value="3">冻结</option>
-					</select>
-				</td>
-				<td><input type="button" value="审核" id="checkUser"/></td>
-				<td>姓名：<s:textfield name="user.name" autocomplete="off" id="userName"/></td>
-				<td>手机号码：<s:textfield name="user.phone" size="12"/></td>
+				<td><input type="button" value="添加" id="addCompany"/></td>
+				<td><input type="button" value="修改" id="updateCompany"/></td>
+				<td>类型：<s:select name="company.type" list="#{'':'全部','水费':'水费', '电费':'电费','煤气费':'煤气费'}"/></td>
+				<td>机构名称：<s:textfield name="company.name" id="companyName" autocomplete="off"/></td>
 				<td><input type="submit" value="查询"/>&nbsp;<font color="red" id="tip">${tip}</font></td>
 			</tr>
 		</table>
@@ -405,16 +359,9 @@
 		<tr class="listHeaderTr">
 			<th><input type="checkbox" id="checkAll"/>全部</th>
 			<th>编号</th>
-			<th>姓名</th>
-			<th>性别</th>
-			<th>qq号码</th>
-			<th>手机号码</th>
-			<th>邮箱</th>
-			<th>状态</th>
-			<th>创建日期</th>
-			<th>创建人</th>
-			<th>审核日期</th>
-			<th>审核人</th>
+			<th>类型</th>
+			<th>机构名称</th>
+			<th>单价</th>
 		</tr>
 		<tbody style="background-color: #FFFFFF;" id="tbody">
 			
@@ -426,7 +373,7 @@
 	 	<ul class="pagination" id="pager"></ul>
 	</div>
 	
-	<!-- 定义div显示用户姓名数据 -->
+	<!-- 定义div显示机构姓名数据 -->
 	<div id="nameDiv" class="nameDiv"></div>
 	
 	<!-- 定义div作为弹出窗口  -->

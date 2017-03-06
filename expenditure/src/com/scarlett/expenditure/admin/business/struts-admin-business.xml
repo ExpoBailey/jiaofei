@@ -5,8 +5,139 @@
 
 <struts>
 	
-    <package name="admin-addressbook" namespace="/admin/addressbook" extends="admin">
-	
+    <package name="admin-business" namespace="/admin/business" extends="admin">
+
+        <!-- #############	 			############## -->
+        <!-- #############	 机构管理	#######TODO### -->
+        <!-- #############	 			############## -->
+        <action name="countCompany" class="com.scarlett.expenditure.admin.business.action.CompanyAction"
+                method="countCompany">
+            <interceptor-ref name="popedomStack"/>
+            <result>/WEB-INF/jsp/admin/business/company.jsp</result>
+        </action>
+
+        <action name="loadCompanyAjax" class="com.scarlett.expenditure.admin.business.action.CompanyAction"
+                method="loadCompanyAjax">
+            <result type="json">
+                <param name="root">listMap</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
+
+        <action name="loadCompanyNameAjax" class="com.scarlett.expenditure.admin.business.action.CompanyAction"
+                method="loadCompanyNameAjax">
+            <result type="json">
+                <param name="root">list</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
+
+        <!-- 跳转到添加出帐机构的页面 -->
+        <action name="showAddCompany">
+            <result>/WEB-INF/jsp/admin/business/addCompany.jsp</result>
+        </action>
+
+        <!-- 异步验证出帐机构名是否重复 -->
+        <action name="validComAjax" class="com.scarlett.expenditure.admin.business.action.CompanyAction" method="validComAjax">
+            <result type="json">
+                <!-- 配置用哪个getXxx返回响应数据 getIsExist -->
+                <param name="root">isExist</param>
+            </result>
+        </action>
+
+        <!-- 添加出帐机构 -->
+        <action name="addCompany" class="com.scarlett.expenditure.admin.business.action.CompanyAction" method="addCompany">
+            <interceptor-ref name="popedomStack"/>
+            <!-- addCompany方法的返回值 -->
+            <result type="json">
+                <param name="root">tipStatus</param>
+            </result>
+            <!-- 后台校验失败时需要找得视图页面 -->
+            <result name="input" type="json">
+                <param name="root">fieldErrors</param>
+            </result>
+        </action>
+
+        <!-- 跳转到修改出帐机构的页面 -->
+        <action name="showUpdateCompany" class="com.scarlett.expenditure.admin.business.action.CompanyAction" method="showUpdateCompany">
+            <result>/WEB-INF/jsp/admin/business/updateCompany.jsp</result>
+        </action>
+
+        <!-- 修改出帐机构 -->
+        <action name="updateCompany" class="com.scarlett.expenditure.admin.business.action.CompanyAction"
+                method="updateCompany">
+            <interceptor-ref name="popedomStack"/>
+            <!-- 配置防表单重复提交的token拦截器 -->
+            <interceptor-ref name="token"/>
+            <!-- updateCompany方法的返回值 -->
+            <result>/WEB-INF/jsp/admin/business/updateCompany.jsp</result>
+            <!-- 表单重复提交时需要找得视图页面 -->
+            <result name="invalid.token">/WEB-INF/jsp/admin/business/updateCompany.jsp</result>
+            <!-- 后台校验失败时需要找得视图页面 -->
+            <result name="input">/WEB-INF/jsp/admin/business/updateCompany.jsp</result>
+        </action>
+
+        <action name="loadAllCompanyAjax" class="com.scarlett.expenditure.admin.business.action.CompanyAction"
+                method="loadAllCompanyAjax">
+            <result type="json">
+                <param name="root">listMap</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
+
+        <!-- #############	 			############## -->
+        <!-- #############	 帐单管理	#######TODO### -->
+        <!-- #############	 			############## -->
+        <action name="countBill" class="com.scarlett.expenditure.admin.business.action.BillAction"
+                method="countBill">
+            <result>/WEB-INF/jsp/admin/business/bill.jsp</result>
+        </action>
+
+        <action name="loadBillAjax" class="com.scarlett.expenditure.admin.business.action.BillAction"
+                method="loadBillAjax">
+            <result type="json">
+                <param name="root">listMap</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
+
+        <!-- 跳转到添加帐单的页面 -->
+        <action name="showAddBill">
+            <result>/WEB-INF/jsp/admin/business/addBill.jsp</result>
+        </action>
+
+        <!-- 添加帐单 -->
+        <action name="addBill" class="com.scarlett.expenditure.admin.business.action.BillAction" method="addBill">
+            <interceptor-ref name="popedomStack"/>
+            <!-- addCompany方法的返回值 -->
+            <result type="json">
+                <param name="root">tipStatus</param>
+            </result>
+            <!-- 后台校验失败时需要找得视图页面 -->
+            <result name="input" type="json">
+                <param name="root">fieldErrors</param>
+            </result>
+        </action>
+
+        <!-- 跳转到修改帐单的页面 -->
+        <action name="showUpdateBill" class="com.scarlett.expenditure.admin.business.action.BillAction" method="showUpdateBill">
+            <result>/WEB-INF/jsp/admin/business/updateBill.jsp</result>
+        </action>
+
+        <!-- 修改帐单 -->
+        <action name="updateBill" class="com.scarlett.expenditure.admin.business.action.BillAction"
+                method="updateBill">
+            <interceptor-ref name="popedomStack"/>
+            <!-- 配置防表单重复提交的token拦截器 -->
+            <interceptor-ref name="token"/>
+            <!-- updateCompany方法的返回值 -->
+            <result>/WEB-INF/jsp/admin/business/updateBill.jsp</result>
+            <!-- 表单重复提交时需要找得视图页面 -->
+            <result name="invalid.token">/WEB-INF/jsp/admin/business/updateBill.jsp</result>
+            <!-- 后台校验失败时需要找得视图页面 -->
+            <result name="input">/WEB-INF/jsp/admin/business/updateBill.jsp</result>
+        </action>
+
     </package>
     
 </struts>
