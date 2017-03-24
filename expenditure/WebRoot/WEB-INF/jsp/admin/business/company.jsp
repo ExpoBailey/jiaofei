@@ -173,8 +173,8 @@
 				/** 弹出添加机构的窗口 */
 				$("#divDialog").dialog({
 					title : "添加机构", //标题
-					width : 475, // 宽度
-					height : 270, // 高度
+					width : 350, // 宽度
+					height : 170, // 高度
 					modal : true, // 模态窗口
 					collapsible : true, // 可伸缩
 					minimizable : false, // 最小化
@@ -199,8 +199,8 @@
 					/** 显示修改窗口 */
 					$("#divDialog").dialog({
 						title : "修改机构", //标题
-						width : 475, // 宽度
-						height : 245, // 高度
+						width : 350, // 宽度
+						height : 170, // 高度
 						modal : true, // 模态窗口
 						collapsible : true, // 可伸缩
 						minimizable : false, // 最小化

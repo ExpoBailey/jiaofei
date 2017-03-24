@@ -24,6 +24,7 @@ public class RoleAction extends IdentityAction {
     /** 查询统计角色 */
     public String selectRole(){
             try{
+                    System.out.println("################## 统计角色 ###################");
                     identityService.countRole(pageModel);
             }catch(Exception ex){
                     ex.printStackTrace();
@@ -34,6 +35,7 @@ public class RoleAction extends IdentityAction {
     /** 异步加载角色 */
     public String loadRoleAjax(){
         try{
+            System.out.println("################## 异步加载角色 ###################");
             listMap = identityService.getRoleByPage(pageModel);
         }catch(Exception ex){
             ex.printStackTrace();

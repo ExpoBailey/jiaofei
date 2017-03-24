@@ -45,6 +45,7 @@ public class ModuleAction extends IdentityAction {
 	/** 分页查询操作 */
 	public String loadModuleAjax(){
 		try{
+			//System.out.println("角色页码中的当前页："+pageModel.getPageIndex());
 			listMap = identityService.getModuleByPage(parentCode, pageModel);
 		}catch(Exception ex){
 			ex.printStackTrace();

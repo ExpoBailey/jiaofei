@@ -194,7 +194,6 @@ public class IdentityService implements IIdentityService {
      * 初始化用户的分页实体
      * 
      * @param user
-     * @param pageModel
      */
     public void countUser(User user, PageModel pageModel) {
         try {
@@ -259,10 +258,11 @@ public class IdentityService implements IIdentityService {
     public void saveUser(User user) {
         try {
             user.setCreateDate(new Date());
-            // user.setCreater(AdminConstant.getSessionUser());
+            user.setCreater(AdminConstant.getSessionUser());
             user.setPassword(MD5.getMD5(user.getPassword()));
             user.setStatus((short) 0);
             userDao.save(user);
+
             // 新增用户后，绑定一个付费易帐号
             FuFeiYi ffy = new FuFeiYi();
             ffy.setUser(user);
@@ -287,7 +287,7 @@ public class IdentityService implements IIdentityService {
             u.setName(user.getName());
             u.setAnswer(user.getAnswer());
             u.setEmail(user.getEmail());
-            // u.setModifier(AdminConstant.getSessionUser());
+            u.setModifier(AdminConstant.getSessionUser());
             u.setModifyDate(new Date());
             u.setPhone(user.getPhone());
             u.setQqNum(user.getQqNum());
@@ -430,7 +430,7 @@ public class IdentityService implements IIdentityService {
     public void saveRole(Role role) {
         try {
             role.setCreateDate(new Date());
-            // role.setCreater(AdminConstant.getSessionUser());
+            role.setCreater(AdminConstant.getSessionUser());
             roleDao.save(role);
         } catch (Exception ex) {
             throw new OAException("添加角色时出现异常！", ex);
@@ -459,7 +459,7 @@ public class IdentityService implements IIdentityService {
     public void updateRole(Role role) {
         try {
             Role r = getRole(role.getId());
-            // r.setModifier(AdminConstant.getSessionUser());
+            r.setModifier(AdminConstant.getSessionUser());
             r.setModifyDate(new Date());
             r.setName(role.getName());
             r.setRemark(role.getRemark());

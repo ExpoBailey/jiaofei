@@ -54,8 +54,8 @@
 				/** 弹出添加的窗口 */
 				$("#divDialog").dialog({
 					title : "添加帐单", //标题
-					width : 475, // 宽度
-					height : 270, // 高度
+					width : 400, // 宽度
+					height : 220, // 高度
 					modal : true, // 模态窗口
 					collapsible : true, // 可伸缩
 					minimizable : false, // 最小化
@@ -80,8 +80,8 @@
 					/** 显示修改窗口 */
 					$("#divDialog").dialog({
 						title : "修改帐单", //标题
-						width : 475, // 宽度
-						height : 245, // 高度
+						width : 400, // 宽度
+						height : 220, // 高度
 						modal : true, // 模态窗口
 						collapsible : true, // 可伸缩
 						minimizable : false, // 最小化

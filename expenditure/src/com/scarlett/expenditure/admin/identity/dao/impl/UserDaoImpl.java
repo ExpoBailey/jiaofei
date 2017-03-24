@@ -77,8 +77,7 @@ public class UserDaoImpl extends HibernateDaoImpl implements IUserDao {
         }
         // 添加排序 
         hql.append(" order by u.createDate asc");
-        return this.findByPage(hql.toString(), pageModel.getStartRow(),
-                        pageModel.getPageSize(), params.toArray());
+        return this.findByPage(hql.toString(), pageModel, params);
     }
     
     /**

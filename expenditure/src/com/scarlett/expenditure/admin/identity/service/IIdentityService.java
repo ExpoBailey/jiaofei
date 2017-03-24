@@ -25,7 +25,6 @@ public interface IIdentityService {
     /**
      * 初始化用户的分页实体
      * @param user
-     * @param pageModel
      */
     void countUser(User user, PageModel pageModel);
     

@@ -10,16 +10,13 @@
 		<!-- #############	 			############## -->
 		<!-- #############	 用户管理	#######TODO### -->
 		<!-- #############	 			############## -->
-		<action name="selectUser" class="com.scarlett.expenditure.admin.identity.action.UserAction"
-				method="selectUser">
-            <interceptor-ref name="popedomStack"/>
-            <result>/WEB-INF/jsp/admin/identity/user.jsp</result>
+		<action name="selectUser" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="countUser">
+			<interceptor-ref name="popedomStack"/>
+			<result>/WEB-INF/jsp/admin/identity/user.jsp</result>
 		</action>
 		
 		<!-- 按条件异步加载用户列表 -->
-		<action name="loadUserPageData" class="com.scarlett.expenditure.admin.identity.action.UserAction"
-				 method="loadUserPageData">
-			<interceptor-ref name="defaultStack"/>
+		<action name="loadUserPageData" class="com.scarlett.expenditure.admin.identity.action.UserAction" method="loadUserPageData">
 			<result type="json">
 				<param name="root">listMap</param>
 				<param name="enableGZIP">true</param>
@@ -178,7 +175,7 @@
 
         <!-- 右边 -->
         <action name="selectModule" class="com.scarlett.expenditure.admin.identity.action.ModuleAction" method="selectModule">
-            <result>/WEB-INF/jsp/admin/identity/module.jsp</result>
+			<result>/WEB-INF/jsp/admin/identity/module.jsp</result>
         </action>
 
         <!-- 异步加载操作列表 -->

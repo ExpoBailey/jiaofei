@@ -287,7 +287,6 @@
 			
 			/** 发异步请求填充表格 */
 			var fillTable = function(num){
-				alert("num:"+num);
 				  $.ajax({
 	           	   	  url : "${path}/admin/identity/loadUserPageData.jspx",
 					  type : "post",
@@ -380,7 +379,7 @@
 </head>
 <body>
 	<!-- 工具按钮区 -->
-	<s:form  action="/admin/identity/selectUser.jspx" method="post" theme="simple">
+	<s:form namespace="/admin/identity" action="selectUser.jspx" method="post" theme="simple">
 		<table>
 			<tr>
 				<td><input type="button" value="添加" id="addUser"/></td>

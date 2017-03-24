@@ -30,5 +30,6 @@
     
     <!-- 引入Struts2子系统级别的配置文件 -->
     <include file="com/scarlett/expenditure/admin/struts-admin.xml"></include>
-    
+    <include file="com/scarlett/expenditure/web/struts-web.xml"></include>
+
 </struts>

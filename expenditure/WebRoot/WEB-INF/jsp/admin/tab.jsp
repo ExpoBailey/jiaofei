@@ -39,9 +39,10 @@
 				}
 			});
 			/** 添加面板 */
+			var url = "${path}/admin/title.jspx";
 			$("#tab").tabs("add", {
-				title:"用户信息", // 标题 
-    			content:"用户信息", // 内容    
+				title:"首页", // 标题
+    			content:"<iframe width='100%' height='100%' src='"+ url +"' frameborder='0'></iframe>", // 内容
     			closable:false // 是否可以关闭 
 			});
 			
