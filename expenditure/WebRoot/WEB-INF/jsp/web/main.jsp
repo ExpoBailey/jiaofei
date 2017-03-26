@@ -34,14 +34,14 @@
 	<style type="text/css">
 		.main {
 			margin-top: 70px;
-			width: 100%;
-			height: 530px;
+			
+			height: 527px;
 		}
 	</style>
 </head>
 
 
-<body>
+<body style="margin:0px;">
 	<div class="container-fluid">
 		<div class="row">
 			<%@include file="head.jsp"%>

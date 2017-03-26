@@ -2,3 +2,6 @@
 /expenditure/.idea
 /expenditure/out
 /expenditure/WebRoot/WEB-INF/classes
+/expenditure/.settings
+/expenditure/.classpath
+/expenditure/*.project

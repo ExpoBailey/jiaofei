@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	
+    <package name="admin-account" namespace="/admin/account" extends="admin">
+
+        <!-- #############	 			############## -->
+        <!-- #############	 付费易管理	#######TODO### -->
+        <!-- #############	 			############## -->
+        <action name="countFFY" class="com.scarlett.expenditure.admin.account.action.FFYAction"
+                method="countFFY">
+            <result>/WEB-INF/jsp/admin/account/fufeiyi.jsp</result>
+        </action>
+
+        <action name="loadFFYAjax" class="com.scarlett.expenditure.admin.account.action.FFYAction"
+                method="loadFFYAjax">
+            <result type="json">
+                <param name="root">listMap</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
+
+        <!-- #############	 			############## -->
+        <!-- #############	交易记录管理	#######TODO### -->
+        <!-- #############	 			############## -->
+        <action name="countRecord" class="com.scarlett.expenditure.admin.account.action.FFYAction"
+                method="countRecord">
+            <result>/WEB-INF/jsp/admin/account/record.jsp</result>
+        </action>
+
+        <action name="loadRecordAjax" class="com.scarlett.expenditure.admin.account.action.FFYAction"
+                method="loadRecordAjax">
+            <result type="json">
+                <param name="root">listMap</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
+
+    </package>
+
+</struts>

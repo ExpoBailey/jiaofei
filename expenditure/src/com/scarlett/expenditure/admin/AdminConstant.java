@@ -23,9 +23,16 @@ public final class AdminConstant {
 	/** 定义存入在Session用户模块对应的权限 */
 	public static final String SESSION_USER_MODULE_POPEDOM = "session_user_module_popedom";
 	
-	/** 获取Session中的用户 */
+	/** 定义存放在Session中的用户 */
+        public static final String WEB_SESSION_USER = "web_session_user";
+	
+	/** 获取Session中的用户(admin) */
 	public static User getSessionUser() {
 		return (User)ActionContext.getContext().getSession().get(SESSION_USER);
+	}
+	/** 获取Session中的用户(web) */
+	public static User getWebSessionUser() {
+	    return (User)ActionContext.getContext().getSession().get(WEB_SESSION_USER);
 	}
 	
 }

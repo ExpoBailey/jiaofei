@@ -13,10 +13,33 @@
 	<link href="${path}/logo.ico" rel="shortcut icon" type="image/x-icon" />
 	<link href="${path}/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${path}/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-
+	<link rel="stylesheet" href="${path}/devAid-v1.1/assets/plugins/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="${path}/devAid-v1.1/assets/plugins/prism/prism.css">
+	<link id="theme-style" rel="stylesheet" href="${path}/devAid-v1.1/assets/css/styles.css">
+	<script type="text/javascript" src="${path}/devAid-v1.1/assets/plugins/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="${path}/devAid-v1.1/assets/plugins/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="${path}/devAid-v1.1/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${path}/devAid-v1.1/assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>
+	<script type="text/javascript" src="${path}/devAid-v1.1/assets/plugins/prism/prism.js"></script>
+	<script type="text/javascript" src="${path}/devAid-v1.1/assets/js/main.js"></script>
+	<style type="text/css">
+		.social-media {
+			background-color: #0c86ae;
+			height: 50px;
+		}
+		.social-media-inner{
+			position: relative; /*脱离文档流*/
+            top: 50%; /*偏移*/
+            transform: translateY(-50%);
+		}
+		ol, ul {
+		    margin-top: 0px;
+		    margin-bottom: -8px;
+		}
+	</style>
 </head>
 
-<body style="margin:0;">
+<body style="margin: 0;">
 	<div class="social-media">
 		<div class="social-media-inner container text-center">
 			<ul class="list-inline">

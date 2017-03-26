@@ -22,25 +22,54 @@
 	<script type="text/javascript" src="${path}/devAid-v1.1/assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>
 	<script type="text/javascript" src="${path}/devAid-v1.1/assets/plugins/prism/prism.js"></script>
 	<script type="text/javascript" src="${path}/devAid-v1.1/assets/js/main.js"></script>
-
+	<style type="text/css">
+		.modal-content{
+			width: 400px;
+			margin: 0 auto;
+		}
+		#myModalLabel{
+			color: black;
+		}
+	</style>
 </head>
 
 <body style="margin:0;">
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+<script>;(function(d, s, id) {
 	var js, fjs = d.getElementsByTagName(s)[0];
 	if (d.getElementById(id)) return;
 	js = d.createElement(s); js.id = id;
 	js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
 	fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));
+
+	
+	window.isLogin = false;
+	
+	$(function(){
+		$.get("${path}/web/checkLogin.action", function(data){
+			isLogin = data.isLogin;
+			var login_exit = $("#login-exit");
+				alert(isLogin);
+			if (data.isLogin) {
+				// 已经登录了，改成退出标签
+				//<a class="scrollto" href="#" >退出</a>
+				login_exit.empty();
+				$("<a/>").addClass("scrollto").prop("href", "${path}/web/exit.action").text("退出").appendTo(login_exit);
+			} else {
+				//<a class="scrollto" href="#" data-toggle="modal" data-target="#myModal">登录</a>
+				//$("<a class='scrollto' href='#' data-toggle='modal' data-target='#myModal'>登录</a>").appendTo(login_exit);
+			}
+		});
+	});
+</script>
 
 <!-- ******HEADER****** -->
 <header id="header" class="header">
 	<div class="container">
 		<h1 class="logo pull-left">
 			<a class="scrollto" href="#promo">
-				<span class="logo-title">devAid</span>
+				<span class="logo-title">付费易</span>
 			</a>
 		</h1><!--//logo-->
 		<nav id="main-nav" class="main-nav navbar-right" role="navigation">
@@ -55,16 +84,33 @@
 			<div class="navbar-collapse collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
-					<li class="nav-item"><a class="scrollto" href="#about">About</a></li>
-					<li class="nav-item"><a class="scrollto" href="#features">Features</a></li>
-					<li class="nav-item"><a class="scrollto" href="#docs">Docs</a></li>
-					<li class="nav-item"><a class="scrollto" href="#license">License</a></li>
-					<li class="nav-item last"><a class="scrollto" href="#contact">Contact</a></li>
+					<li class="nav-item"><a class="scrollto" href="${path}/web/account/myAccount.do">我的帐户</a></li>
+					<li class="nav-item"><a class="scrollto" href="${path}/web/account/billSelect.do">帐单查询</a></li>
+					<li class="nav-item"><a class="scrollto" href="${path}/web/inform/inform.do">通知公告</a></li>
+					<li class="nav-item last" id="login-exit"><a class="scrollto" href="#" data-toggle="modal" data-target="#myModal">登录</a></li>
 				</ul><!--//nav-->
 			</div><!--//navabr-collapse-->
 		</nav><!--//main-nav-->
 	</div>
 </header><!--//header-->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">付费易</h4>
+      </div>
+      <div class="modal-body">
+        <%@include file="login.jsp" %>
+      </div>
+      <div class="modal-footer">
+      	<br/>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 </html>

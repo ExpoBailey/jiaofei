@@ -9,9 +9,7 @@
 
         <interceptors>
             <!-- 登录拦截器 -->
-            <interceptor name="loginInterceptor" class="com.scarlett.expenditure.admin.interceptor.LoginInterceptor"/>
-            <!-- 权限拦截器 -->
-            <interceptor name="popedomInterceptor" class="com.scarlett.expenditure.admin.interceptor.PopedomInterceptor"/>
+            <interceptor name="loginInterceptor" class="com.scarlett.expenditure.web.interceptor.LoginInterceptor"/>
 
             <!-- 登录拦截器栈 -->
             <interceptor-stack name="loginStack">
@@ -27,14 +25,33 @@
 		<!-- 全局结果配置 -->
         <global-results>
             <result name="error">/error.jsp</result>
-            <result name="login">/WEB-INF/jsp/web/index.jsp</result>
+            <result name="login">/WEB-INF/jsp/web/main.jsp</result>
         </global-results>
         
         <!-- 配置该命名空间下全局的Action main、head -->
         <action name="*">
             <result>/WEB-INF/jsp/web/{1}.jsp</result>
         </action>
-
+		
+		<!-- 前端界面登录 -->
+		<action name="loginAjax" class="com.scarlett.expenditure.web.LoginAction" method="login">
+			<result type="json">
+				<param name="root">map</param>
+			</result>
+		</action>
+		
+		<!-- 检查是否登录 -->
+		<action name="checkLogin" class="com.scarlett.expenditure.web.LoginAction" method="checkLogin">
+			<result type="json">
+				<param name="root">map</param>
+			</result>
+		</action>
+		
+		<!-- 退出登录 -->
+		<action name="exit" class="com.scarlett.expenditure.web.LoginAction" method="exit">
+			<interceptor-ref name="loginStack"></interceptor-ref>
+			<result type="redirectAction">main</result>
+		</action>
     </package>
     
     <!-- 引用Struts2模块级别的配置文件 -->
