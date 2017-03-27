@@ -55,5 +55,5 @@
     </package>
     
     <!-- 引用Struts2模块级别的配置文件 -->
-    <!--<include file="com/scarlett/expenditure/admin/account/struts-admin-account.xml"/>-->
+    <include file="com/scarlett/expenditure/web/account/struts-web-account.xml"/>
 </struts>

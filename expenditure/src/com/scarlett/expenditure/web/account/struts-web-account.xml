@@ -5,37 +5,32 @@
 
 <struts>
 	
-    <package name="admin-account" namespace="/admin/account" extends="admin">
+    <package name="web-account" namespace="/web/account" extends="web">
 
         <!-- #############	 			############## -->
         <!-- #############	 付费易管理	#######TODO### -->
         <!-- #############	 			############## -->
-        <action name="countFFY" class="com.scarlett.expenditure.admin.account.action.FFYAction"
-                method="countFFY">
-            <result>/WEB-INF/jsp/admin/account/fufeiyi.jsp</result>
+        <action name="myAccount">
+        	<interceptor-ref name="loginStack"></interceptor-ref>
+            <result>/WEB-INF/jsp/web/account/myAccount.jsp</result>
+        </action>
+        
+        <action name="accountInfo" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="accountInfo">
+            <interceptor-ref name="loginStack"></interceptor-ref>
+            <result>/WEB-INF/jsp/web/account/accountInfo.jsp</result>
         </action>
 
-        <action name="loadFFYAjax" class="com.scarlett.expenditure.admin.account.action.FFYAction"
-                method="loadFFYAjax">
+		<action name="fullMoney" >
+            <interceptor-ref name="loginStack"></interceptor-ref>
+            <result>/WEB-INF/jsp/web/account/fullMoney.jsp</result>
+        </action>
+        
+        <action name="fullMoneyAjax" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="fullMoneyAjax">
+            <interceptor-ref name="loginStack"></interceptor-ref>
             <result type="json">
-                <param name="root">listMap</param>
-                <param name="enableGZIP">true</param>
-            </result>
-        </action>
-
-        <!-- #############	 			############## -->
-        <!-- #############	交易记录管理	#######TODO### -->
-        <!-- #############	 			############## -->
-        <action name="countRecord" class="com.scarlett.expenditure.admin.account.action.FFYAction"
-                method="countRecord">
-            <result>/WEB-INF/jsp/admin/account/record.jsp</result>
-        </action>
-
-        <action name="loadRecordAjax" class="com.scarlett.expenditure.admin.account.action.FFYAction"
-                method="loadRecordAjax">
-            <result type="json">
-                <param name="root">listMap</param>
-                <param name="enableGZIP">true</param>
+            	<param name="root">map</param>
             </result>
         </action>
 

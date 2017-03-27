@@ -44,7 +44,7 @@
 }(document, 'script', 'facebook-jssdk'));
 
 	
-	window.isLogin = false;
+	window.isLogin = false; // 未登录
 	
 	$(function(){
 		$.get("${path}/web/checkLogin.action", function(data){
@@ -61,6 +61,15 @@
 			}
 		});
 	});
+	
+	function toMain(url){
+		if (!isLogin) {
+			alert("抱歉，您还未登录帐户！");
+			return false;
+		}
+		var iframe = $("#mainIframe", parent.document);
+		iframe.attr("src", url);
+	}
 </script>
 
 <!-- ******HEADER****** -->
@@ -83,9 +92,9 @@
 			<div class="navbar-collapse collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
-					<li class="nav-item"><a class="scrollto" href="${path}/web/account/myAccount.do">我的帐户</a></li>
-					<li class="nav-item"><a class="scrollto" href="${path}/web/account/billSelect.do">帐单查询</a></li>
-					<li class="nav-item"><a class="scrollto" href="${path}/web/inform/inform.do">通知公告</a></li>
+					<li class="nav-item"><a class="scrollto" onclick="toMain('${path}/web/account/myAccount.do')">我的帐户</a></li>
+					<li class="nav-item"><a class="scrollto" href="toMain('${path}/web/account/billSelect.do')">帐单查询</a></li>
+					<li class="nav-item"><a class="scrollto" onclick="h()">通知公告</a></li>
 					<li class="nav-item last" id="login-exit"><a class="scrollto" href="#" data-toggle="modal" data-target="#myModal">登录</a></li>
 				</ul><!--//nav-->
 			</div><!--//navabr-collapse-->

@@ -16,13 +16,14 @@
 	<script type="text/javascript" src="${path}/js/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="${path}/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 	<script>
-		function setURL(id,url){
+		window.setURL = function(id,url){
 			if (url == null || url =="") {
 				url = "/expenditure/web/index.do";
 			}
 			$("#"+id).attr("src", url);
 		}
 		$(function(){
+			
 //			setURL("headIframe","/expenditure/web/head.do");
 //			setURL("footIframe","/expenditure/web/foot.do");
 			setURL("mainIframe","");
@@ -47,7 +48,7 @@
 			<%@include file="head.jsp"%>
 		</div>
 		<div class="main row">
-			<iframe id="mainIframe" frameborder="0" width="100%" height="100%" ></iframe>
+			<iframe id="mainIframe" name="mainIframe" frameborder="0" width="100%" height="100%" ></iframe>
 		</div>
 		<div class="row">
 			<%@include file="foot.jsp"%>

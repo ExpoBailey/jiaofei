@@ -2,7 +2,9 @@ package com.scarlett.expenditure.web.account.service;
 
 import java.util.Map;
 
+import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
 import com.scarlett.expenditure.admin.identity.entity.User;
+import com.scarlett.expenditure.web.account.FullFrom;
 
 /**
  * IService
@@ -16,5 +18,9 @@ public interface IService {
      * @return
      */
     Map<String, Object> login(String userId, String password);
+
+    FuFeiYi getMyAccount();
+
+    Map<String, Object> fullMoney(FullFrom from);
 
 }

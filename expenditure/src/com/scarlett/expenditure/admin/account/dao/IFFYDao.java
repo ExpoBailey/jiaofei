@@ -31,4 +31,6 @@ public interface IFFYDao extends HibernateDao{
      * @return
      */
     List<FuFeiYi> loadFFYByPage(User user, PageModel pageModel);
+
+    FuFeiYi getFFYByUserId(String userId);
 }
