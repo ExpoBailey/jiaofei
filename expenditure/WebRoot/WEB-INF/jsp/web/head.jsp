@@ -50,7 +50,6 @@
 		$.get("${path}/web/checkLogin.action", function(data){
 			isLogin = data.isLogin;
 			var login_exit = $("#login-exit");
-				alert(isLogin);
 			if (data.isLogin) {
 				// 已经登录了，改成退出标签
 				//<a class="scrollto" href="#" >退出</a>

@@ -35,6 +35,9 @@
 <script type="text/javascript"
 	src="${path}/devAid-v1.1/assets/js/main.js"></script>
 <style type="text/css">
+	html, body, section{
+		height: 100%;
+	}
 .promo {
 	background: #17baef;
 	color: #fff;
