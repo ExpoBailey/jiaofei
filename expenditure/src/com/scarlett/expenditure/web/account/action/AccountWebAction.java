@@ -1,17 +1,19 @@
 package com.scarlett.expenditure.web.account.action;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
-import com.scarlett.expenditure.admin.account.service.IAccountService;
-import com.scarlett.expenditure.core.pojo.PageModel;
-import com.scarlett.expenditure.web.account.FullFrom;
-import com.scarlett.expenditure.web.account.service.IService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.scarlett.expenditure.admin.AdminConstant;
+import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
+import com.scarlett.expenditure.admin.account.service.IAccountService;
+import com.scarlett.expenditure.core.pojo.PageModel;
+import com.scarlett.expenditure.web.account.entity.FullFrom;
+import com.scarlett.expenditure.web.account.service.IService;
 
 /**
  *AccountWebAction.java.java
@@ -28,11 +30,18 @@ public class AccountWebAction extends ActionSupport{
     @Autowired
     private IService service;
     
+    @Autowired
+    private IAccountService accountService;
+    
     private FuFeiYi ffy;
     
     private FullFrom from;
     
+    private PageModel pageModel = new PageModel();
+    
     private Map<String, Object> map = new HashMap<String, Object>();
+    
+    private List<Map<String, Object>> listMap = new ArrayList<>();
     
     /** 帐户信息 */
     public String accountInfo(){
@@ -46,11 +55,33 @@ public class AccountWebAction extends ActionSupport{
     /** 充值 */
     public String fullMoneyAjax(){
         try {
-            service.fullMoney(from);
+            map = service.fullMoney(from);
         } catch (Exception e) {
         }
         return SUCCESS;
     }
+    
+    /** 交易记录统计个数 */
+    public String countMyRecord(){
+        try {
+            pageModel.setPageSize(4);
+            accountService.countRecord(AdminConstant.getWebSessionUser(), null, null, pageModel);
+        } catch (Exception e) {
+        }
+        return SUCCESS;
+    }
+    
+    /** 交易记录详细数据 */
+    public String recordInfoAjax(){
+        try {
+            pageModel.setPageSize(4);
+            listMap = accountService.loadRecordAjax(AdminConstant.getWebSessionUser(), null, null, pageModel);
+        } catch (Exception e) {
+        }
+        return SUCCESS;
+    }
+    
+    
 
     /** getter and setter method */
     public FuFeiYi getFfy() {
@@ -70,5 +101,17 @@ public class AccountWebAction extends ActionSupport{
     }
     public void setFrom(FullFrom from) {
         this.from = from;
+    }
+    public PageModel getPageModel() {
+        return pageModel;
+    }
+    public void setPageModel(PageModel pageModel) {
+        this.pageModel = pageModel;
+    }
+    public List<Map<String, Object>> getListMap() {
+        return listMap;
+    }
+    public void setListMap(List<Map<String, Object>> listMap) {
+        this.listMap = listMap;
     }
 }

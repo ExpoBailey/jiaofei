@@ -3,7 +3,9 @@ package com.scarlett.expenditure.web.account.service.impl;
 import com.opensymphony.xwork2.ActionContext;
 import com.scarlett.expenditure.admin.AdminConstant;
 import com.scarlett.expenditure.admin.account.dao.IFFYDao;
+import com.scarlett.expenditure.admin.account.dao.IRecordDao;
 import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
+import com.scarlett.expenditure.admin.account.entity.Record;
 import com.scarlett.expenditure.admin.identity.dao.IUserDao;
 import com.scarlett.expenditure.admin.identity.entity.User;
 import com.scarlett.expenditure.core.exception.OAException;
@@ -14,6 +16,8 @@ import com.scarlett.expenditure.web.account.service.IService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +34,9 @@ public class ServiceImpl implements IService {
     
     @Resource
     private IFFYDao ffyDao;
+    
+    @Resource
+    private IRecordDao recordDao;
 
     @Override
     public Map<String, Object> login(String userId, String password) {
@@ -89,15 +96,20 @@ public class ServiceImpl implements IService {
                     System.out.println("计算公式：" + old + " + " + num + " = " + now);
                     from.setSum(old);
                     from.setNow(now);
+                    from.setType("充值");
                     ffy.setSum(now);
+                    // 2.帐单记录
+                    addRecordInfo(ffy, from);
                 }
-                // 2.帐单记录
-
+                map.put("status", 1);
+                map.put("des", "充值成功！余额为￥" + ffy.getSum());
             } else {
                 map.put("status", 0);
                 map.put("des", "支付方式验证失败！");
             }
         } catch (Exception e) {
+            map.put("status", 0);
+            map.put("des", "充值失败，服务器异常！");
             throw new OAException("充值方法出现异常！", e);
         }
         return map;
@@ -107,7 +119,26 @@ public class ServiceImpl implements IService {
     public void addRecordInfo(FuFeiYi ffy, FullFrom from) {
     //    如：总额 70 元    电费     支出   50.0 元   余额 20.0 元
     //    如：总额  0 元   支付宝    充值   30.0 元   余额 30.0 元
-
+        try {
+            StringBuilder sb = new StringBuilder();
+            if (from != null) {
+                sb.append("总额：￥").append(from.getSum())
+                .append(" ").append(from.getFrom())
+                .append(" ").append(from.getType())
+                .append("：￥" + from.getNum())
+                .append(" 余额：￥").append(from.getNow());
+            }
+            if (ffy != null && ffy.getUser() != null) {
+                Record record = new Record();
+                record.setFfy(ffy);
+                record.setContent(sb.toString());
+                record.setTranDate(new Date());
+                record.setRemark("");
+                recordDao.save(record);
+            }
+        } catch (Exception e) {
+            throw new OAException("添加帐单记录出现异常！", e);
+        }
     }
 
 
