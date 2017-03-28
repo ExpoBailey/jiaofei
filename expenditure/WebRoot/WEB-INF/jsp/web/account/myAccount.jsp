@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>付费易脚</title>
+<title>我的帐号页面</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
@@ -73,9 +73,9 @@ a{
 		<div class="row">
 		  <div class="col-xs-6 col-md-4">
 			  	<div class="list-group">
-				  <a href="toPanel('${path}/web/account/accountInfo.do')" class="list-group-item active">帐户信息</a>
-				  <a href="#" class="list-group-item">收支明细</a>
-				  <a href="#" class="list-group-item">帐户充值</a>
+				  <a href="javascript:toPanel('${path}/web/account/accountInfo.do')" class="list-group-item active">帐户信息</a>
+				  <a href="javascript:toPanel('${path}/web/account/record.do')" class="list-group-item">收支明细</a>
+				  <a href="javascript:toPanel('${path}/web/account/fullMoney.do')" class="list-group-item">帐户充值</a>
 				  <a href="#" class="list-group-item">常见问题</a>
 				</div>
 		  </div>

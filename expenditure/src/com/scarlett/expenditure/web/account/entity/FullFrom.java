@@ -1,4 +1,4 @@
-package com.scarlett.expenditure.web.account;
+package com.scarlett.expenditure.web.account.entity;
 
 import java.io.Serializable;
 
@@ -10,19 +10,55 @@ import java.io.Serializable;
 public class FullFrom implements Serializable{
 
     private static final long serialVersionUID = 7745457385654694234L;
-    
-    private String from;
+//    如：总额 70 元    电费     支出   50.0 元   余额 20.0 元
+//    如：总额  0 元   支付宝    充值   30.0 元   余额 30.0 元
 
+    /**交易目标*/
+    private String from;
+    /**来源帐号*/
     private String id;
-    
+    /**来源登录密码*/
     private String regPW;
-    
+    /**来源交易密码*/
     private String tranPW;
-    
+
+    /**总额*/
+    private Double sum;
+
+    /**交易金额*/
     private Double num;
 
-    
-    
+    /**交易后余额*/
+    private Double now;
+
+    /**收入还是支出状态*/
+    private String type;
+
+
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
+    }
+
+    public Double getNow() {
+        return now;
+    }
+
+    public void setNow(Double now) {
+        this.now = now;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getFrom() {
         return from;
     }

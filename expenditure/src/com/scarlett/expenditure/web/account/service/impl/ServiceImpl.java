@@ -1,12 +1,5 @@
 package com.scarlett.expenditure.web.account.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.scarlett.expenditure.admin.AdminConstant;
 import com.scarlett.expenditure.admin.account.dao.IFFYDao;
@@ -15,8 +8,14 @@ import com.scarlett.expenditure.admin.identity.dao.IUserDao;
 import com.scarlett.expenditure.admin.identity.entity.User;
 import com.scarlett.expenditure.core.exception.OAException;
 import com.scarlett.expenditure.core.util.MD5;
-import com.scarlett.expenditure.web.account.FullFrom;
+import com.scarlett.expenditure.core.util.NumUtil;
+import com.scarlett.expenditure.web.account.entity.FullFrom;
 import com.scarlett.expenditure.web.account.service.IService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ServiceImpl
@@ -81,8 +80,19 @@ public class ServiceImpl implements IService {
             boolean success = true;
             if (success) {
                 // 1.充值
-                
+                //  先拿此用户帐号
+                FuFeiYi ffy = getMyAccount();
+                Double old = ffy.getSum();
+                Double num = from.getNum();
+                if (num != 0.00) {
+                    double now = NumUtil.add(old, num);
+                    System.out.println("计算公式：" + old + " + " + num + " = " + now);
+                    from.setSum(old);
+                    from.setNow(now);
+                    ffy.setSum(now);
+                }
                 // 2.帐单记录
+
             } else {
                 map.put("status", 0);
                 map.put("des", "支付方式验证失败！");
@@ -92,6 +102,13 @@ public class ServiceImpl implements IService {
         }
         return map;
     }
-    
-    
+
+    @Override
+    public void addRecordInfo(FuFeiYi ffy, FullFrom from) {
+    //    如：总额 70 元    电费     支出   50.0 元   余额 20.0 元
+    //    如：总额  0 元   支付宝    充值   30.0 元   余额 30.0 元
+
+    }
+
+
 }

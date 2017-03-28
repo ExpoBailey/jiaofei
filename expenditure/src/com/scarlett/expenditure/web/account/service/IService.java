@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
 import com.scarlett.expenditure.admin.identity.entity.User;
-import com.scarlett.expenditure.web.account.FullFrom;
+import com.scarlett.expenditure.web.account.entity.FullFrom;
 
 /**
  * IService
@@ -23,4 +23,10 @@ public interface IService {
 
     Map<String, Object> fullMoney(FullFrom from);
 
+    /**
+     * 添加一条帐户记录信息
+     * @param ffy
+     * @param from
+     */
+    void addRecordInfo(FuFeiYi ffy, FullFrom from);
 }

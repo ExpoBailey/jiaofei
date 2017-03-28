@@ -54,10 +54,10 @@
 				<%--<!--// Generate github buttons: https://github.com/mdo/github-buttons -->--%>
 				<%--<li class="github-star"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>--%>
 				<%--<li class="github-fork"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="53" height="20"></iframe></li>--%>
-				<!--//
+				<%--//
 				<li class="github-follow"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&type=follow&count=true"
 	allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe></li>
-				-->
+				--%>
 			</ul>
 		</div>
 	</div>

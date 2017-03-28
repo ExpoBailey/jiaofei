@@ -62,7 +62,7 @@ public class FFYDaoImpl extends HibernateDaoImpl implements IFFYDao {
     @Override
     public FuFeiYi getFFYByUserId(String userId) {
         StringBuilder hql = new StringBuilder();
-        hql.append("select * from FuFeiYi f where f.user.userId = ?");
-        return this.findUniqueEntity(hql.toString(), userId);
+        hql.append("select f from FuFeiYi f inner join f.user u where u.userId = ?");
+        return this.findUniqueEntity(hql.toString(), new Object[]{userId});
     }
 }
