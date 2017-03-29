@@ -1,22 +1,26 @@
 package com.scarlett.expenditure.admin.business.service.impl;
 
-import com.scarlett.expenditure.admin.account.entity.Record;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import com.scarlett.expenditure.admin.account.dao.IFFYDao;
 import com.scarlett.expenditure.admin.business.dao.IBillDao;
 import com.scarlett.expenditure.admin.business.dao.ICompanyDao;
 import com.scarlett.expenditure.admin.business.entity.Bill;
 import com.scarlett.expenditure.admin.business.entity.Company;
 import com.scarlett.expenditure.admin.business.service.IBusinessService;
 import com.scarlett.expenditure.admin.identity.dao.IUserDao;
-import com.scarlett.expenditure.admin.identity.entity.User;
 import com.scarlett.expenditure.core.exception.OAException;
 import com.scarlett.expenditure.core.pojo.PageModel;
 import com.scarlett.expenditure.core.util.NumUtil;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.util.*;
 
 /**
  *BusinessServiceImpl.java
@@ -37,6 +41,9 @@ public class BusinessServiceImpl implements IBusinessService {
 
     @Resource
     private IUserDao userDao;
+    
+    @Resource
+    private IFFYDao ffyDao;
 
     @Override
     public void countCompany(Company company, PageModel pageModel) {
@@ -243,4 +250,6 @@ public class BusinessServiceImpl implements IBusinessService {
             throw new OAException("修改帐单时出现异常", ex);
         }
     }
+
+
 }

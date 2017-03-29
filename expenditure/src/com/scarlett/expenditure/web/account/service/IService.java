@@ -3,6 +3,7 @@ package com.scarlett.expenditure.web.account.service;
 import java.util.Map;
 
 import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
+import com.scarlett.expenditure.admin.business.entity.Bill;
 import com.scarlett.expenditure.admin.identity.entity.User;
 import com.scarlett.expenditure.web.account.entity.FullFrom;
 
@@ -29,4 +30,12 @@ public interface IService {
      * @param from
      */
     void addRecordInfo(FuFeiYi ffy, FullFrom from);
+    
+    /**
+     * 单张帐单，通过当前用户付费易缴费
+     * @param from 
+     * @param bill 帐单
+     * @return
+     */
+    Map<String, Object> transation(FullFrom from, Bill bill);
 }

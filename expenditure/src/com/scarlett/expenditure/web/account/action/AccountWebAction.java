@@ -70,7 +70,7 @@ public class AccountWebAction extends ActionSupport{
     
     /** 交易记录统计个数 */
     public String countMyRecord(){
-        try {
+         try {
             pageModel.setPageSize(4);
             accountService.countRecord(AdminConstant.getWebSessionUser(), null, null, pageModel);
         } catch (Exception e) {
@@ -102,7 +102,7 @@ public class AccountWebAction extends ActionSupport{
         return SUCCESS;
     }
 
-    /** 加载当前用户的帐单 */
+    /** 加载当前用户的某类帐单 */
     public String loadBillAjax(){
         try {
             pageModel.setPageSize(4);
@@ -116,7 +116,17 @@ public class AccountWebAction extends ActionSupport{
         return SUCCESS;
     }
     
-
+    /** 缴费 */
+    public String transaction(){
+        try {
+            map = service.transation(from, bill);
+        } catch (Exception e) {
+            map.put("status", 0);
+            map.put("des", "缴费系统异常！");
+        }
+        return SUCCESS;
+    }
+    
     /** getter and setter method */
     public FuFeiYi getFfy() {
         return ffy;

@@ -6,6 +6,8 @@ import com.scarlett.expenditure.admin.account.dao.IFFYDao;
 import com.scarlett.expenditure.admin.account.dao.IRecordDao;
 import com.scarlett.expenditure.admin.account.entity.FuFeiYi;
 import com.scarlett.expenditure.admin.account.entity.Record;
+import com.scarlett.expenditure.admin.business.dao.IBillDao;
+import com.scarlett.expenditure.admin.business.entity.Bill;
 import com.scarlett.expenditure.admin.identity.dao.IUserDao;
 import com.scarlett.expenditure.admin.identity.entity.User;
 import com.scarlett.expenditure.core.exception.OAException;
@@ -37,6 +39,9 @@ public class ServiceImpl implements IService {
     
     @Resource
     private IRecordDao recordDao;
+    
+    @Resource
+    private IBillDao billDao;
 
     @Override
     public Map<String, Object> login(String userId, String password) {
@@ -141,5 +146,94 @@ public class ServiceImpl implements IService {
         }
     }
 
-
+    /**
+     * 单张帐单，通过当前用户付费易缴费
+     * @param from 
+     * @param bill 帐单
+     * @return
+     */
+    public Map<String, Object> transation(FullFrom from, Bill bill) {
+        Map<String,Object> map = new HashMap<String, Object>();
+        try {
+            // 获取当前用户
+            User user = AdminConstant.getWebSessionUser();
+            
+            if (user == null || "".equals(user.getUserId())) {
+                map.put("status", 0);
+                map.put("des", "用户未登录！");
+                return map;
+            }
+            
+            // 付费易帐户
+            FuFeiYi ffy = ffyDao.getFFYByUserId(user.getUserId());
+            
+            // 校验交易密码
+            if (from == null || "".equals(from.getTranPW())) {
+                map.put("status", 0);
+                map.put("des", "交易密码不能为空！");
+                return map;
+            }
+            
+            if (!MD5.getMD5(from.getTranPW()).equals(ffy.getPassword())) {
+                map.put("status", 0);
+                map.put("des", "交易密码错误！");
+                return map;
+            }
+            
+            // 帐单
+            bill = billDao.get(Bill.class, bill.getId());
+            
+            if (bill == null || bill.getType() == 1) {
+                map.put("status", 0);
+                map.put("des", bill == null ? "帐单不存在！" : "帐单已被缴纳过！");
+                return map;
+            }
+            
+            if (ffy.getSum() < bill.getSumPrice()) {
+                map.put("status", 0);
+                map.put("des", "帐户金额不足，请充值后再缴费。");
+                return map;
+            }
+            
+            // 系统的付费易，所有付费的钱都转到这
+            FuFeiYi admin = ffyDao.getFFYByUserId("admin");
+            
+            from.setSum(ffy.getSum());
+            
+            // 余额
+            double now = NumUtil.sub(ffy.getSum(), bill.getSumPrice());
+            ffy.setSum(now);
+            
+            // 转钱
+            FullFrom f = new FullFrom();
+            f.setSum(admin.getSum());
+            admin.setSum(NumUtil.add(admin.getSum(), bill.getSumPrice()));
+            
+            // 变换帐单的状态
+            bill.setType(1);
+            bill.setHandleDate(new Date());
+            bill.setCostStyle("付费易");
+            
+            // 设置记录数据
+            from.setFrom(bill.getCompany().getType());
+            from.setNow(ffy.getSum());
+            from.setNum(bill.getSumPrice());
+            from.setType("支出");
+            
+            // 当前用户的记录
+            addRecordInfo(ffy, from);
+            
+            // 系统用户记录
+            f.setFrom(ffy.getUser().getUserId() + " -- " + ffy.getUser().getName());
+            f.setNow(admin.getSum());
+            f.setNum(bill.getSumPrice());
+            f.setType("收入 -- " + bill.getCompany().getType() + " -- " + bill.getCompany().getName());
+            addRecordInfo(admin, f);
+        } catch (Exception ex) {
+            throw new OAException("单张帐单，通过当前用户付费易缴费时出现异常", ex);
+        }
+        map.put("status", 1);
+        map.put("des", "缴费成功！");
+        return map;
+    }
 }

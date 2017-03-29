@@ -4,6 +4,7 @@ import com.scarlett.expenditure.admin.business.entity.Bill;
 import com.scarlett.expenditure.admin.business.entity.Company;
 import com.scarlett.expenditure.admin.identity.entity.User;
 import com.scarlett.expenditure.core.pojo.PageModel;
+import com.scarlett.expenditure.web.account.entity.FullFrom;
 
 import java.util.Date;
 import java.util.List;
@@ -108,4 +109,6 @@ public interface IBusinessService {
      * @param bill
      */
     void updateBill(Bill bill);
+
+
 }
