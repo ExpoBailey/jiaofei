@@ -26,7 +26,7 @@ public interface IBusinessService {
     void countCompany(Company company, PageModel pageModel);
 
     /**
-     * 异步加载付费易列表
+     * 异步加载机构列表
      * @param company
      * @param pageModel
      * @return
@@ -34,7 +34,7 @@ public interface IBusinessService {
     List<Map<String,Object>> loadCompanyAjax(Company company, PageModel pageModel);
 
     /**
-     * 按条件、分页统计交易记录的条数
+     * 按条件、分页统计帐单的条数
      * @param bill
      * @param startDate
      * @param endDate
@@ -42,7 +42,7 @@ public interface IBusinessService {
     void countBill(Bill bill, Date startDate, Date endDate, PageModel pageModel);
 
     /**
-     * 异步加载交易记录列表
+     * 异步加载帐单列表
      * @param bill
      * @param startDate
      * @param endDate
@@ -59,7 +59,7 @@ public interface IBusinessService {
     boolean validComAjax(String name, Long id);
 
     /**
-     * 增加
+     * 增加机构
      * @param company
      */
     void addCompany(Company company);

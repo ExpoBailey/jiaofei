@@ -38,6 +38,10 @@ public class BillDaoImpl extends HibernateDaoImpl implements IBillDao {
                 hql.append(" and c.name like ?");
                 params.add("%" + bill.getCompany().getName() + "%");
             }
+            if (bill.getCompany() != null && !StringUtils.isEmpty(bill.getCompany().getType())) {
+                hql.append(" and c.type = ?");
+                params.add(bill.getCompany().getType());
+            }
         }
         if (startDate != null && endDate != null) {
             hql.append(" and b.appearDate between ? and ?");
@@ -61,6 +65,10 @@ public class BillDaoImpl extends HibernateDaoImpl implements IBillDao {
             if (bill.getCompany() != null && !StringUtils.isEmpty(bill.getCompany().getName())) {
                 hql.append(" and c.name like ?");
                 params.add("%" + bill.getCompany().getName() + "%");
+            }
+            if (bill.getCompany() != null && !StringUtils.isEmpty(bill.getCompany().getType())) {
+                hql.append(" and c.type = ?");
+                params.add(bill.getCompany().getType());
             }
         }
         if (startDate != null && endDate != null) {

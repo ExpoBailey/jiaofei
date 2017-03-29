@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.scarlett.expenditure.admin.business.entity.Bill;
+import com.scarlett.expenditure.admin.business.service.IBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -32,10 +34,15 @@ public class AccountWebAction extends ActionSupport{
     
     @Autowired
     private IAccountService accountService;
+
+    @Autowired
+    private IBusinessService businessService;
     
     private FuFeiYi ffy;
     
     private FullFrom from;
+
+    private Bill bill;
     
     private PageModel pageModel = new PageModel();
     
@@ -80,7 +87,34 @@ public class AccountWebAction extends ActionSupport{
         }
         return SUCCESS;
     }
-    
+
+    /** 当前用户帐单数量 */
+    public String countBill(){
+        try {
+            pageModel.setPageSize(4);
+            if (bill == null) {
+                bill = new Bill();
+            }
+            bill.setPertain(AdminConstant.getWebSessionUser());
+            businessService.countBill(bill, null, null, pageModel);
+        } catch (Exception e) {
+        }
+        return SUCCESS;
+    }
+
+    /** 加载当前用户的帐单 */
+    public String loadBillAjax(){
+        try {
+            pageModel.setPageSize(4);
+            if (bill == null) {
+                bill = new Bill();
+            }
+            bill.setPertain(AdminConstant.getWebSessionUser());
+            listMap = businessService.loadBillAjax(bill, null, null, pageModel);
+        } catch (Exception e) {
+        }
+        return SUCCESS;
+    }
     
 
     /** getter and setter method */
@@ -113,5 +147,11 @@ public class AccountWebAction extends ActionSupport{
     }
     public void setListMap(List<Map<String, Object>> listMap) {
         this.listMap = listMap;
+    }
+    public Bill getBill() {
+        return bill;
+    }
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 }
