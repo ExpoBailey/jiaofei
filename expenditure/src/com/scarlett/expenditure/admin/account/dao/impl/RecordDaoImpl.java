@@ -56,6 +56,7 @@ public class RecordDaoImpl extends HibernateDaoImpl implements IRecordDao{
             params.add(startDate);
             params.add(endDate);
         }
+        hql.append(" order by r.tranDate desc ");
         return this.count(hql.toString(), params.toArray());
     }
 
@@ -88,6 +89,7 @@ public class RecordDaoImpl extends HibernateDaoImpl implements IRecordDao{
             params.add(startDate);
             params.add(endDate);
         }
+        hql.append(" order by r.tranDate desc ");
         return findByPage(hql.toString(), pageModel, params);
     }
 }

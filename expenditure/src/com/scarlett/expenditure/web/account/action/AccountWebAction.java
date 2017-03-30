@@ -71,7 +71,7 @@ public class AccountWebAction extends ActionSupport{
     /** 交易记录统计个数 */
     public String countMyRecord(){
          try {
-            pageModel.setPageSize(4);
+            pageModel.setPageSize(8);
             accountService.countRecord(AdminConstant.getWebSessionUser(), null, null, pageModel);
         } catch (Exception e) {
         }
@@ -81,7 +81,7 @@ public class AccountWebAction extends ActionSupport{
     /** 交易记录详细数据 */
     public String recordInfoAjax(){
         try {
-            pageModel.setPageSize(4);
+            pageModel.setPageSize(8);
             listMap = accountService.loadRecordAjax(AdminConstant.getWebSessionUser(), null, null, pageModel);
         } catch (Exception e) {
         }

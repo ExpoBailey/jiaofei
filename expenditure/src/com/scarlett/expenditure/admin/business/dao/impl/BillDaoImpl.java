@@ -42,12 +42,18 @@ public class BillDaoImpl extends HibernateDaoImpl implements IBillDao {
                 hql.append(" and c.type = ?");
                 params.add(bill.getCompany().getType());
             }
+            if (bill.getType() != 0) {
+                hql.append(" and b.type = ?");
+                params.add(bill.getType());
+            }
         }
         if (startDate != null && endDate != null) {
             hql.append(" and b.appearDate between ? and ?");
             params.add(startDate);
             params.add(endDate);
         }
+        
+        hql.append(" order by b.handleDate desc ");
         return this.count(hql.toString(), params.toArray());
     }
 
@@ -70,12 +76,18 @@ public class BillDaoImpl extends HibernateDaoImpl implements IBillDao {
                 hql.append(" and c.type = ?");
                 params.add(bill.getCompany().getType());
             }
+            if (bill.getType() != 0) {
+                hql.append(" and b.type = ?");
+                params.add(bill.getType());
+            }
         }
         if (startDate != null && endDate != null) {
             hql.append(" and b.appearDate between ? and ?");
             params.add(startDate);
             params.add(endDate);
         }
+        
+        hql.append(" order by b.handleDate desc ");
         return this.findByPage(hql.toString(), pageModel, params);
     }
 }

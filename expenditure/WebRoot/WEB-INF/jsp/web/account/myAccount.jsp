@@ -57,10 +57,32 @@
 a{
 	color: #FFFFFF
 }
+.left-list {
+    width: 220px;
+    text-align: center;
+    padding-right: 0px;
+    height: 100%
+}
+.two {
+	margin: 0 auto;
+	*display:inline; 
+	*zoom:1; 
+}
+.panel-body {
+	height: 450px;
+}
+.list-group-item .active {
+	background-color: #ccc;
+}
 </style>
 
 <script type="text/javascript">
-	function toPanel(url){
+	function toPanel(url,obj){
+		alert(obj);
+		// 切换列表
+		$(".active").removeClass("active");
+		$(obj).addClass("active");
+		// 跳到页面
 		$("#panel").attr("src", url);
 	}
 </script>
@@ -70,17 +92,16 @@ a{
 	<!-- ******PROMO****** -->
 	<section id="promo" class="promo section offset-header"> 
 	
-		<div class="row">
-		  <div class="col-xs-6 col-md-4">
+		<div class="two clearfix">
+		  <div class="col-xs-6 col-md-2 left-list">
 			  	<div class="list-group">
-				  <a href="javascript:toPanel('${path}/web/account/accountInfo.do')" class="list-group-item active">帐户信息</a>
-				  <a href="javascript:toPanel('${path}/web/account/record.do')" class="list-group-item">收支明细</a>
-				  <a href="javascript:toPanel('${path}/web/account/fullMoney.do')" class="list-group-item">帐户充值</a>
-				  <a href="#" class="list-group-item">常见问题</a>
+				  <a href="javascript:toPanel('${path}/web/account/accountInfo.do',this)" class="list-group-item active">帐户信息</a>
+				  <a href="javascript:toPanel('${path}/web/account/record.do',this)" class="list-group-item">收支明细</a>
+				  <a href="javascript:toPanel('${path}/web/account/fullMoney.do',this)" class="list-group-item">帐户充值</a>
 				</div>
 		  </div>
 		  
-		  <div class="col-xs-12 col-md-8"> 
+		  <div class="col-xs-12 col-md-10"> 
 		  		<div class="panel panel-default">
 				  <div class="panel-body">
 				    <iframe id="panel" frameborder="0" width="100%" height="100%" src="${path}/web/account/accountInfo.do"></iframe>

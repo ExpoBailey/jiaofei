@@ -27,15 +27,20 @@
 <style type="text/css">
 	html, body, section{
 		height: 100%;
+		width: 95%;
 	}
 
-.carousel-inner .item img {
-	width: 100%;
-	height: 100%;
-}
 
 a{
 	color: #FFFFFF
+}
+.form-horizontal {
+	position: relative; /*脱离文档流*/
+	top: 50%; /*偏移*/
+	transform: translateY(-50%);
+	display:inline-block; 
+	*display:inline; 
+	*zoom:1; 
 }
 </style>
 
@@ -93,51 +98,59 @@ a{
 	<form class="form-horizontal" id="form" method="post">
 		<div class="form-group">
 			<label for="id" class="col-sm-2 control-label">付费易余额</label>
-			<div class="col-sm-10">
-				<span>${ffy.sum}</span>
+			<div class="col-sm-3">
+				<div class="input-group">
+			      <div class="input-group-addon">￥</div>
+			      <input type="text" class="form-control" value="${ffy.sum}">
+			    </div>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="radio-inline">
-				<input type="radio" name="from.from" id="zhi" value="支付宝"> 支付宝
-			</label>
-			<label class="radio-inline">
-				<input type="radio" name="from.from" id="weChat" value="微信"> 微信
-			</label>
+			<label for="id" class="col-sm-2 control-label">充值方式</label>
+			<div class="col-sm-5">
+				<label class="radio-inline">
+					<input type="radio" name="from.from" checked="checked" id="zhi" value="支付宝"> 支付宝
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="from.from" id="weChat" value="微信"> 微信
+				</label>
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="id" class="col-sm-2 control-label">帐号</label>
-			<div class="col-sm-10">
+			<div class="col-sm-3">
 				<input type="text" class="form-control" name="from.id" id="id" placeholder="手机号">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="regPW" class="col-sm-2 control-label">登录密码</label>
-			<div class="col-sm-10">
+			<div class="col-sm-3">
 				<input type="password" class="form-control" id="regPW" name="from.regPW" placeholder="登录密码">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="tranPW" class="col-sm-2 control-label" >交易密码</label>
-			<div class="col-sm-10">
+			<div class="col-sm-3">
 				<input type="password" class="form-control" id="tranPW" name="from.tranPW" placeholder="交易密码">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="num" class="col-sm-2 control-label">充值金额</label>
-			<select class="form-control" name="from.num" id="num">
-				<option value="10.0">10 元</option>
-				<option value="20.0">20 元</option>
-				<option value="50.0">50 元</option>
-				<option value="100.0">100 元</option>
-				<option value="200.0">200 元</option>
-				<option value="500.0">500 元</option>
-				<option value="1000.0">1000 元</option>
-			</select>
+			<div class="col-sm-2">
+				<select class="form-control" name="from.num" id="num">
+					<option value="10.0">10 元</option>
+					<option value="20.0">20 元</option>
+					<option value="50.0">50 元</option>
+					<option value="100.0">100 元</option>
+					<option value="200.0">200 元</option>
+					<option value="500.0">500 元</option>
+					<option value="1000.0">1000 元</option>
+				</select>
+			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<button type="button" id="full" class="btn btn-default">马上充值</button>
+				<button type="button" id="full" class="btn btn-primary">马上充值</button>
 			</div>
 		</div>
 	</form>

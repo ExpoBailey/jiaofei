@@ -34,6 +34,21 @@
             	<param name="root">map</param>
             </result>
         </action>
+
+        <action name="record" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="countMyRecord">
+            <interceptor-ref name="loginStack"></interceptor-ref>
+           <result>/WEB-INF/jsp/web/account/record.jsp</result>
+        </action>
+        
+        <action name="recordInfoAjax" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="recordInfoAjax">
+            <interceptor-ref name="loginStack"></interceptor-ref>
+            <result type="json">
+            	<param name="root">listMap</param>
+            	<param name="enableGZIP">true</param>
+            </result>
+        </action>
 		
 		<!-- #############	 			############## -->
         <!-- #############	 我的帐单		#######TODO### -->
