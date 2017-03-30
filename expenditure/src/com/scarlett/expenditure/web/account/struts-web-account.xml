@@ -21,7 +21,8 @@
             <result>/WEB-INF/jsp/web/account/accountInfo.jsp</result>
         </action>
 
-		<action name="fullMoney" >
+		<action name="fullMoney" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="accountInfo">
             <interceptor-ref name="loginStack"></interceptor-ref>
             <result>/WEB-INF/jsp/web/account/fullMoney.jsp</result>
         </action>
@@ -42,7 +43,6 @@
         <!-- #############	 			############## -->
         <!-- #############	 缴费系统		#######TODO### -->
         <!-- #############	 			############## -->
-        
     </package>
 
 </struts>
