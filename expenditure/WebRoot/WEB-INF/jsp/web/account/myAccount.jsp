@@ -78,7 +78,7 @@ a{
 
 <script type="text/javascript">
 	function toPanel(url,obj){
-		alert(obj);
+		//alert(obj);
 		// 切换列表
 		$(".active").removeClass("active");
 		$(obj).addClass("active");

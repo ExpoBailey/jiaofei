@@ -53,8 +53,25 @@
 		<!-- #############	 			############## -->
         <!-- #############	 我的帐单		#######TODO### -->
         <!-- #############	 			############## -->
-        
-        
+        <action name="bill" >
+            <interceptor-ref name="loginStack"></interceptor-ref>
+            <result>/WEB-INF/jsp/web/account/bill.jsp</result>
+        </action>
+        <action name="billSelect" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="countBill">
+            <interceptor-ref name="loginStack"></interceptor-ref>
+            <result>/WEB-INF/jsp/web/account/billInfo.jsp</result>
+        </action>
+
+        <action name="loadBillAjax" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="loadBillAjax">
+            <interceptor-ref name="loginStack"></interceptor-ref>
+            <result type="json">
+                <param name="root">listMap</param>
+                <param name="enableGZIP">true</param>
+            </result>
+        </action>
+
         <!-- #############	 			############## -->
         <!-- #############	 缴费系统		#######TODO### -->
         <!-- #############	 			############## -->
