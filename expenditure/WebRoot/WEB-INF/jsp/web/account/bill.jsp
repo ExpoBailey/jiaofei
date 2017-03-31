@@ -25,65 +25,99 @@
 <script type="text/javascript"
 	src="${path}/devAid-v1.1/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
-	html, body, section{
-		height: 100%;
-	}
+html, body, section {
+	height: 100%;
+}
+
 .promo {
 	background: #17baef;
 	color: #fff;
 	padding-top: 50px;
 }
+
 .carousel-inner .item img {
 	width: 100%;
 	height: 100%;
 }
+
 .carousel slide {
 	height: 300px;
 	width: 400px;
 }
-.container {
-    margin: 0 auto;
-}
-a{
 
+.container {
+	margin: 0 auto;
 }
-	.title {
-		text-align: center;
-	}
+
+a {
+	
+}
+
+.title {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.panel-warning {
+	margin-bottom: 0px;
+	height: 470px;
+}
+
+.circle {
+	background-color: #d9edf7;
+	border-radius: 81px;
+	width: 42px;
+	cursor: pointer;
+	margin: 0 auto;
+}
+
+.circle img {
+	width: 40px;
+	height: 40px;
+}
+.col-xs-4 {
+    margin: 9px 0px;
+}
 </style>
 
 <script type="text/javascript">
 	function toBill(type) {
-		//alert(type);
-		$("#bill").attr("href", "${path}/web/account/billSelect.do?bill.company.type=" + type)
+		$("#bill").prop(
+				"src",
+				"${path}/web/account/billSelect.do?type=" + type
+						+ "&bill.company.type=");
 	}
+	$(function() {
+		toBill(0);
+	});
 </script>
 </head>
 
 <body style="margin: 0px;">
-<!-- Columns are always 50% wide, on mobile and desktop -->
-<div class="row title">
-	<div class="col-xs-6">
-		<h2><a href="javascript:toBill('')">全部</a></h2>
-	</div>
-	<div class="col-xs-6">
-		<h2><a href="javascript:toBill('水费')">水</a></h2>
-	</div>
-</div>
+	<!-- Columns are always 50% wide, on mobile and desktop -->
 
-<div class="panel panel-warning">
-	<iframe frameborder="0" width="100%" height="100%" id="bill" ></iframe>
-</div>
+	<div class="panel panel-warning">
+		<iframe frameborder="0" width="100%" height="100%" id="bill"></iframe>
+	</div>
 
-<!-- Columns are always 50% wide, on mobile and desktop -->
-<div class="row title">
-	<div class="col-xs-6">
-		<h2><a href="javascript:toBill('电费')">电</a></h2>
+	<!-- Columns are always 50% wide, on mobile and desktop -->
+	<div class="row title">
+		<div class="col-xs-4">
+			<div class="circle button" onclick="toBill(1)">
+				<img src="${path}/images/water.png" alt="水费">
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<div class="circle button" onclick="toBill(2)">
+				<img src="${path}/images/ligh.png" alt="电费">
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<div class="circle button" onclick="toBill(3)">
+				<img src="${path}/images/hot.png" alt="燃气费">
+			</div>
+		</div>
 	</div>
-	<div class="col-xs-6">
-		<h2><a href="javascript:toBill('煤气费')">煤气</a></h2>
-	</div>
-</div>
 </body>
 
 </html>

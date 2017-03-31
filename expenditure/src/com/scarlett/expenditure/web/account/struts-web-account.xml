@@ -53,9 +53,9 @@
 		<!-- #############	 			############## -->
         <!-- #############	 我的帐单		#######TODO### -->
         <!-- #############	 			############## -->
-        <action name="bill" >
+        <action name="*" >
             <interceptor-ref name="loginStack"></interceptor-ref>
-            <result>/WEB-INF/jsp/web/account/bill.jsp</result>
+            <result>/WEB-INF/jsp/web/account/{1}.jsp</result>
         </action>
         <action name="billSelect" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
                 method="countBill">

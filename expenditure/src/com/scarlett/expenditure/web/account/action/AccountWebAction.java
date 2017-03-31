@@ -1,5 +1,7 @@
 package com.scarlett.expenditure.web.account.action;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,8 @@ public class AccountWebAction extends ActionSupport{
     private FuFeiYi ffy;
     
     private FullFrom from;
+    
+    private int type;
 
     private Bill bill;
     
@@ -91,9 +95,25 @@ public class AccountWebAction extends ActionSupport{
     /** 当前用户帐单数量 */
     public String countBill(){
         try {
-            pageModel.setPageSize(4);
+            pageModel.setPageSize(9);
             if (bill == null) {
                 bill = new Bill();
+            }   
+            switch (type) {
+            case 1:
+                bill.getCompany().setType("水费");
+                break;
+                
+            case 2:
+                bill.getCompany().setType("电费");
+                break;
+                
+            case 3:
+                bill.getCompany().setType("煤气费");
+                break;
+                
+            default:
+                break;
             }
             bill.setPertain(AdminConstant.getWebSessionUser());
             businessService.countBill(bill, null, null, pageModel);
@@ -105,9 +125,25 @@ public class AccountWebAction extends ActionSupport{
     /** 加载当前用户的某类帐单 */
     public String loadBillAjax(){
         try {
-            pageModel.setPageSize(4);
+            pageModel.setPageSize(9);
             if (bill == null) {
                 bill = new Bill();
+            }
+            switch (type) {
+            case 1:
+                bill.getCompany().setType("水费");
+                break;
+                
+            case 2:
+                bill.getCompany().setType("电费");
+                break;
+                
+            case 3:
+                bill.getCompany().setType("煤气费");
+                break;
+                
+            default:
+                break;
             }
             bill.setPertain(AdminConstant.getWebSessionUser());
             listMap = businessService.loadBillAjax(bill, null, null, pageModel);
@@ -163,5 +199,11 @@ public class AccountWebAction extends ActionSupport{
     }
     public void setBill(Bill bill) {
         this.bill = bill;
+    }
+    public int getType() {
+        return type;
+    }
+    public void setType(int type) {
+        this.type = type;
     }
 }

@@ -67,7 +67,7 @@
 	
 	function toMain(url){
 		if (!isLogin) {
-			alert("抱歉，您还未登录帐户！");
+			$('#myModal').modal('show');
 			return false;
 		}
 		var iframe = $("#mainIframe", parent.document);
@@ -97,7 +97,7 @@
 					<li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
 					<li class="nav-item"><a class="scrollto" onclick="toMain('${path}/web/account/myAccount.do')">我的帐户</a></li>
 					<li class="nav-item"><a class="scrollto" onclick="toMain('${path}/web/account/bill.do')">帐单查询</a></li>
-					<li class="nav-item"><a class="scrollto" onclick="toMain('${path}/web/account/newBillSelect.do')">未缴帐单</a></li>
+					<li class="nav-item"><a class="scrollto" onclick="toMain('${path}/web/account/account/newBillSelect.do')">未缴帐单</a></li>
 					<li class="nav-item last" id="login-exit"><a class="scrollto" href="#" data-toggle="modal" data-target="#myModal">登录</a></li>
 				</ul><!--//nav-->
 			</div><!--//navabr-collapse-->

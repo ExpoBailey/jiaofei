@@ -47,7 +47,7 @@
 				$.ajax({
 					url : "${path}/web/account/loadBillAjax.do",
 					type : "post",
-					data : "pageModel.pageIndex="+ num + "&bill.company.type=${bill.company.type}",
+					data : "pageModel.pageIndex="+ num + "&type=${type}" + "&bill.company.type=",
 					dataType : "json",
 					async : true,
 					success : function(data){
@@ -121,15 +121,12 @@
 		<tbody id="tbody">
 
 		</tbody>
-		<tfoot>
-			<!-- 分页标签区 -->
+	</table>
+</div>
+<!-- 分页标签区 -->
 			<div align="center">
 				<ul class="pagination" id="pager"></ul>
 			</div>
-		</tfoot>
-	</table>
-</div>
-
 </body>
 
 </html>
