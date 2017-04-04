@@ -18,26 +18,26 @@
 	<script>
 		function login(){
 			var userId = $("#userId");
-			var password = $("#password");
-			var msg = "";
-			$("#userId-tip").text(msg);
-			$("#password-tip").text(msg);
-			if ($.trim(userId.val()) == "") {
-				//userId.focus(); // 获取焦点
-			} else if (!/^\w{5,20}$/.test($.trim(userId.val()))){
-				msg = "用户名格式不正确！";
+				var password = $("#password");
+				var msg = "";
 				$("#userId-tip").text(msg);
-				//userId.focus(); // 获取焦点
-			} else if ($.trim(password.val()) == ""){
-				//password.focus(); // 获取焦点
-			} else if (!/^\w{6,20}$/.test($.trim(password.val()))){
-				msg = "密码格式不正确！";
 				$("#password-tip").text(msg);
-				//password.focus(); // 获取焦点
-			}
-			if (msg != "") {
-				
-			} else {
+				if ($.trim(userId.val()) == "") {
+					//userId.focus(); // 获取焦点
+				} else if (!/^\w{5,20}$/.test($.trim(userId.val()))){
+					msg = "用户名格式不正确！";
+					$("#userId-tip").text(msg);
+					//userId.focus(); // 获取焦点
+				} else if ($.trim(password.val()) == ""){
+					//password.focus(); // 获取焦点
+				} else if (!/^\w{6,20}$/.test($.trim(password.val()))){
+					msg = "密码格式不正确！";
+					$("#password-tip").text(msg);
+					//password.focus(); // 获取焦点
+				}
+				if (msg != "") {
+
+				} else {
 				$.ajax({
 					url : "/expenditure/web/loginAjax.do",
 					type : "POST",

@@ -68,11 +68,30 @@ a{
 	*display:inline; 
 	*zoom:1; 
 }
+.list-group{
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
 .panel-body {
 	height: 450px;
 }
+.list-group-item:first-child {
+	 border-top-left-radius: 0px;
+	 border-top-right-radius: 0px;
+}
+.list-group-item:last-child {
+	margin-bottom: 0;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+.panel{
+	border-radius: 0px;
+}
 .list-group-item .active {
 	background-color: #ccc;
+}
+.panel-body {
+	padding: 11px;
 }
 </style>
 
@@ -95,9 +114,9 @@ a{
 		<div class="two clearfix">
 		  <div class="col-xs-6 col-md-2 left-list">
 			  	<div class="list-group">
-				  <a href="javascript:toPanel('${path}/web/account/accountInfo.do',this)" class="list-group-item active">帐户信息</a>
-				  <a href="javascript:toPanel('${path}/web/account/record.do',this)" class="list-group-item">收支明细</a>
-				  <a href="javascript:toPanel('${path}/web/account/fullMoney.do',this)" class="list-group-item">帐户充值</a>
+				  <a onclick="toPanel('${path}/web/account/accountInfo.do',this)" class="list-group-item active">帐户信息</a>
+				  <a onclick="toPanel('${path}/web/account/record.do',this)" class="list-group-item">收支明细</a>
+				  <a onclick="toPanel('${path}/web/account/fullMoney.do',this)" class="list-group-item">帐户充值</a>
 				</div>
 		  </div>
 		  

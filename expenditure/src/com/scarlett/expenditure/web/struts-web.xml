@@ -25,7 +25,7 @@
 		<!-- 全局结果配置 -->
         <global-results>
             <result name="error">/error.jsp</result>
-            <result name="login">/WEB-INF/jsp/web/main.jsp</result>
+            <result type="redirect" name="login">/WEB-INF/jsp/web/main.jsp</result>
         </global-results>
         
         <!-- 配置该命名空间下全局的Action main、head -->

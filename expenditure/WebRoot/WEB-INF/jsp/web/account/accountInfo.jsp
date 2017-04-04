@@ -44,6 +44,11 @@
 .container {
     margin: 0 auto;
 }
+.show-border{
+	border-left: 3px red solid;
+	padding-left: 7px;
+	margin-left: 20px;
+}
 a{
 	color: #FFFFFF
 }
@@ -55,10 +60,21 @@ a{
 </head>
 
 <body style="margin: 0px;">
-	<div class="alert alert-success" role="alert"> 
-		用户名：<span>${ffy.user.name}</span><br/>
-		总额：<span>${ffy.sum}</span><br/>
-		帐户说明：<span>${ffy.remark}</span><br/>
+	<div class="alert alert-success" role="alert">
+		<div class="row">
+			<div class="col-md-6 show-border">用户名：<span>${ffy.user.name}</span></div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-6 show-border">总额：￥&nbsp;<span>${ffy.sum}</span></div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-6 show-border">帐户说明：<span>${ffy.remark}</span></div>
+		</div>
+
+
+
 	</div>
 </body>
 

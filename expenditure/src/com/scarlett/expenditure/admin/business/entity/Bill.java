@@ -48,7 +48,7 @@ public class Bill implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date appearDate;
     
-    /** 帐单状态    0：未缴    1：已缴 */
+    /** 帐单状态       1：已缴  2：未缴  */
     @Column(name="TYPE")
     private int type;
     

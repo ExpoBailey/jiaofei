@@ -51,7 +51,7 @@
         </action>
 		
 		<!-- #############	 			############## -->
-        <!-- #############	 我的帐单		#######TODO### -->
+        <!-- #############	 我的帐单	#######TODO### -->
         <!-- #############	 			############## -->
         <action name="*" >
             <interceptor-ref name="loginStack"></interceptor-ref>
@@ -73,8 +73,15 @@
         </action>
 
         <!-- #############	 			############## -->
-        <!-- #############	 缴费系统		#######TODO### -->
+        <!-- #############	 缴费系统	#######TODO### -->
         <!-- #############	 			############## -->
+        <action name="transaction" class="com.scarlett.expenditure.web.account.action.AccountWebAction"
+                method="transaction">
+            <interceptor-ref name="loginStack"></interceptor-ref>
+            <result type="json">
+                <param name="root">Map</param>
+            </result>
+        </action>
     </package>
 
 </struts>

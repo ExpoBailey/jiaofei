@@ -73,13 +73,18 @@
 		var iframe = $("#mainIframe", parent.document);
 		iframe.attr("src", url);
 	}
+
+	function reload(){
+		window.location.reload();
+	}
 </script>
 
 <!-- ******HEADER****** -->
 <header id="header" class="header">
 	<div class="container">
 		<h1 class="logo pull-left">
-			<a class="scrollto" href="#promo">
+			<a class="scrollto" href="javascript:reload()">
+				<img width="45px" height="45px" src="${path}/images/LOGO.png" alt="首页">
 				<span class="logo-title">付费易</span>
 			</a>
 		</h1><!--//logo-->

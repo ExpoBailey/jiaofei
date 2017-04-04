@@ -8,7 +8,7 @@ package com.scarlett.expenditure.core.pojo;
  */
 public class PageModel {
 	/** 定义默认每页显示的记录条数 */
-	private static final int PAGE_SIZE = 2;
+	private static final int PAGE_SIZE = 8;
 	/** 定义当前页码 */
 	private int pageIndex;
 	/** 定义每页显示记录条数 */

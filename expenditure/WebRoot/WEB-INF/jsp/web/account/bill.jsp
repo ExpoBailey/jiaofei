@@ -60,7 +60,7 @@ a {
 
 .panel-warning {
 	margin-bottom: 0px;
-	height: 470px;
+	height: 469px;
 }
 
 .circle {

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.scarlett.expenditure.core.util.DateUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -187,13 +188,17 @@ public class BusinessServiceImpl implements IBusinessService {
                     data.put("price","￥ " + bill.getCompany().getPrice() + "元/" + unit);
                     data.put("use", bill.getUsageAmount() + unit);
                     data.put("sum", bill.getSumPrice());
-                    String[] typeArrs = { "<font color='red'>未缴</font>", "<font>已缴</font>"};
+                    String[] typeArrs = {"", "<font>已缴</font>", "<font color='red'>未缴</font>"};
                     data.put("type", typeArrs[bill.getType()]);
                     data.put("pertain", bill.getPertain().getUserId() + " " + bill.getPertain().getName());
                     data.put("appearDate", bill.getAppearDate());
                     data.put("handleDate", bill.getHandleDate() == null ? "" : bill.getHandleDate());
                     data.put("checker", bill.getChecker() == null ? "" : bill.getChecker().getName());
                     data.put("remark", StringUtils.isEmpty(bill.getRemark()) ? "" : bill.getRemark());
+
+                    // 封装前端需要使用的其他数据
+                    data.put("overTime", DateUtil.getIntervalDay(bill.getAppearDate()));
+                    data.put("comType", type);
                     listMap.add(data);
                 }
             }
@@ -211,6 +216,8 @@ public class BusinessServiceImpl implements IBusinessService {
             Double price = bill.getCompany().getPrice();
             Double usageAmount = bill.getUsageAmount();
             bill.setSumPrice(NumUtil.mul(price, usageAmount));
+            // 设置为“未缴状态”
+            bill.setType(2);
             billDao.save(bill);
         } catch (Exception ex) {
             throw new OAException("增加帐单时出现异常", ex);
