@@ -52,6 +52,7 @@ public class PopedomInterceptor extends MethodFilterInterceptor {
 				// /admin/identity/checkUser
 				// /admin/identity/checkUser.jspx
 				/** 做权限验证 */
+				System.out.println("拥有的权限URL：" + operaUrl.substring(0, operaUrl.lastIndexOf(".")));
 				if (operaUrl.substring(0, operaUrl.lastIndexOf(".")).equals(requestUrl)){
 					/** 把该模块所有的权限存入Session */
 					invocation.getInvocationContext().getSession().put(AdminConstant.SESSION_USER_MODULE_POPEDOM, 
