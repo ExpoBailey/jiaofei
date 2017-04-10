@@ -83,6 +83,9 @@ a{
 						} else {
 							alert(data.des);
 						}
+						var iframe = $("#panel", parent.document);
+						var url = "${path}/web/account/fullMoney.do";
+						iframe.attr("src", url);
 					},
 					error:function(){
 

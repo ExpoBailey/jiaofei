@@ -53,7 +53,7 @@ public class BillDaoImpl extends HibernateDaoImpl implements IBillDao {
             params.add(endDate);
         }
         
-        hql.append(" order by b.handleDate desc ");
+        hql.append(" order by b.appearDate desc ");
         return this.count(hql.toString(), params.toArray());
     }
 
@@ -87,7 +87,7 @@ public class BillDaoImpl extends HibernateDaoImpl implements IBillDao {
             params.add(endDate);
         }
         
-        hql.append(" order by b.handleDate desc ");
+        hql.append(" order by b.appearDate desc ");
         return this.findByPage(hql.toString(), pageModel, params);
     }
 }

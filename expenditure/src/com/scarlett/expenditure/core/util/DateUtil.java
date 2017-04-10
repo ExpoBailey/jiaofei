@@ -14,7 +14,9 @@ public class DateUtil {
 			long nowTime = new Date().getTime();
 			long time = 0L;
 			if (oldTime > nowTime) {
-				time = oldTime - nowTime;
+    			        // 缴费日期还没到
+				//time = oldTime - nowTime;
+			        return 0;
 			} else {
 				time = nowTime - oldTime;
 			}
